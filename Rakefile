@@ -45,7 +45,7 @@ ALL_IMAGES.each do |image|
 
   desc "Build #{OWNER}/#{image} image"
   task "build/#{image}" => "pull/base_image/#{image}" do
-    sh "docker build #{DOCKER_FLAGS} --rm --force-rm -t #{OWNER}/#{image}-notebook:latest ./#{image}"
+    sh "docker build . #{DOCKER_FLAGS} --rm --force-rm -t #{OWNER}/#{image}-notebook:latest ./#{image}"
   end
 
   desc "Tag #{OWNER}/#{image} image"

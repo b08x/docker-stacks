@@ -149,8 +149,8 @@ RUN gem update --system 3.4.18
 
 WORKDIR /home/$USER
 
-COPY ../Gemfile .
-COPY ../gems .
+COPY Gemfile .
+COPY gems .
 
 RUN mkdir -pv stuff && chmod 2775 stuff
 

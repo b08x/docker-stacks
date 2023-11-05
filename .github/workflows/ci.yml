@@ -32,7 +32,9 @@ jobs:
           ruby-version: "3.1"
 
       - name: Build images
-        run: rake build/${{ matrix.image_base_name }}
+        run: |
+          export DOCKER_FLAGS="--file ${{ matrix.image_base_name }}/Dockerfile"
+          rake build/${{ matrix.image_base_name }}
 
       - name: Tag
         run: |
