@@ -2,57 +2,57 @@ name: CI
 
 on:
   push:
-    branches: development
+    branches: ["development"]
     paths-ignore:
-    - 'README.md'
-    - 'binder/*'
-    - 'docs/*'
+      - "README.md"
+      - "binder/*"
+      - "docs/*"
   pull_request:
     paths-ignore:
-    - 'README.md'
-    - 'binder/*'
-    - 'docs/*'
+      - "README.md"
+      - "binder/*"
+      - "docs/*"
 
 jobs:
   build_and_push:
     strategy:
       matrix:
         image_base_name:
-        # - minimal
-        # - datascience
-        - nlp
+          # - minimal
+          # - datascience
+          - nlp
 
     name: ${{ matrix.image_base_name }}-notebook
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+      - uses: actions/checkout@v1
 
-    - uses: ruby/setup-ruby@master
-      with:
-        ruby-version: "3.1"
+      - uses: ruby/setup-ruby@master
+        with:
+          ruby-version: "3.1"
 
-    - name: Build images
-      run: rake build/${{ matrix.image_base_name }}
+      - name: Build images
+        run: rake build/${{ matrix.image_base_name }}
 
-    - name: Tag
-      run: |
-        tag=${GITHUB_SHA:0:12}
-        docker tag b08x/${{ matrix.image_base_name }}-notebook:latest b08x/${{ matrix.image_base_name }}-notebook:${tag}
+      - name: Tag
+        run: |
+          tag=${GITHUB_SHA:0:12}
+          docker tag b08x/${{ matrix.image_base_name }}-notebook:latest b08x/${{ matrix.image_base_name }}-notebook:${tag}
 
-    - name: List images
-      run: docker images --format '{{.Repository}}:{{.Tag}}\t{{.ID}}'
+      - name: List images
+        run: docker images --format '{{.Repository}}:{{.Tag}}\t{{.ID}}'
 
-    - name: Login to DockerHub
-      if: github.ref == 'refs/heads/master'
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_TOKEN }}
+      - name: Login to DockerHub
+        if: github.ref == 'refs/heads/master'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
 
-    - name: Push images to DockerHub
-      if: github.ref == 'refs/heads/master'
-      run: |
-        docker images --format '{{.Repository}}:{{.Tag}}' | grep b08x/${{ matrix.image_base_name }}-notebook | while read image_name; do
-          echo "Pushing ${image_name}"
-          docker push ${image_name}
-        done
+      - name: Push images to DockerHub
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker images --format '{{.Repository}}:{{.Tag}}' | grep b08x/${{ matrix.image_base_name }}-notebook | while read image_name; do
+            echo "Pushing ${image_name}"
+            docker push ${image_name}
+          done
