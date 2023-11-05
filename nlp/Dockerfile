@@ -147,15 +147,19 @@ COPY --from=rubylang/ruby:3.1.3-focal \
 
 RUN gem update --system 3.4.18
 
-RUN chmod 0755 /home/$USER
+WORKDIR /home/$USER
+
+COPY Gemfile .
+COPY gems .
+
+RUN mkdir -pv stuff && chmod 2775 stuff
+
+RUN chown -R $USER:$GROUP_ID /home/$USER
 
 USER $USER
-WORKDIR /home/$USER
 
 # NOTE: DO NOT CHANGE the version in the path of gem's bin directory
 ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$HOME/.local/bin:$PATH
-
-RUN mkdir -pv stuff && chmod 2775 stuff
 
 RUN pip install spacy
 
@@ -167,23 +171,16 @@ ENV BUNDLE_PATH $HOME/.local/share/gem
 
 RUN echo "gem: --user-install" >> $HOME/.gemrc
 
-COPY Gemfile .
-COPY gems .
-
 RUN gem install rbplotly-0.1.2.gem && \
     gem install nmatrix-0.2.4.gem && \
     gem install nmatrix-fftw-0.2.4.gem && \
     gem install nmatrix-lapacke-0.2.4.gem && \
     gem install ferret-0.11.9.0.gem
 
-RUN sudo chown $USER:$GROUP_ID Gemfile && sudo chmod 664 Gemfile
-
 RUN bundle config build.redic --with-cxx="clang++" --with-cflags="-std=c++0x" && \
   bundle install
 
 # To fix: qt.qpa.xcb could not connect to display
 ENV QT_QPA_PLATFORM offscreen
-
-RUN sudo chown -R $USER:$GROUP_ID work/
 
 RUN iruby register --force

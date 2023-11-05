@@ -1,7 +1,8 @@
-OWNER = 'rubydata'.freeze
+OWNER = 'b08x'.freeze
 ALL_IMAGES = %w[
   minimal
   datascience
+  nlp
 ].each(&:freeze).freeze
 
 BASE_IMAGES = ALL_IMAGES.map { |name|

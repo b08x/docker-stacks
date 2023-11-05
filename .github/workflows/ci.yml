@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: master
+    branches: development
     paths-ignore:
     - 'README.md'
     - 'binder/*'
@@ -18,8 +18,9 @@ jobs:
     strategy:
       matrix:
         image_base_name:
-        - minimal
-        - datascience
+        # - minimal
+        # - datascience
+        - nlp
 
     name: ${{ matrix.image_base_name }}-notebook
     runs-on: ubuntu-latest
@@ -28,7 +29,7 @@ jobs:
 
     - uses: ruby/setup-ruby@master
       with:
-        ruby-version: "3.0"
+        ruby-version: "3.1"
 
     - name: Build images
       run: rake build/${{ matrix.image_base_name }}
@@ -36,7 +37,7 @@ jobs:
     - name: Tag
       run: |
         tag=${GITHUB_SHA:0:12}
-        docker tag rubydata/${{ matrix.image_base_name }}-notebook:latest rubydata/${{ matrix.image_base_name }}-notebook:${tag}
+        docker tag b08x/${{ matrix.image_base_name }}-notebook:latest b08x/${{ matrix.image_base_name }}-notebook:${tag}
 
     - name: List images
       run: docker images --format '{{.Repository}}:{{.Tag}}\t{{.ID}}'
@@ -51,7 +52,7 @@ jobs:
     - name: Push images to DockerHub
       if: github.ref == 'refs/heads/master'
       run: |
-        docker images --format '{{.Repository}}:{{.Tag}}' | grep rubydata/${{ matrix.image_base_name }}-notebook | while read image_name; do
+        docker images --format '{{.Repository}}:{{.Tag}}' | grep b08x/${{ matrix.image_base_name }}-notebook | while read image_name; do
           echo "Pushing ${image_name}"
           docker push ${image_name}
         done

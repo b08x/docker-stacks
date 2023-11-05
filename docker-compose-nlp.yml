@@ -16,9 +16,5 @@ services:
       - 8888:8888
 
 volumes:
-  #  conda:
-  #    driver: local
-  #  nltk_data:
-  #    driver: local
   ruby_notebook:
     driver: local
