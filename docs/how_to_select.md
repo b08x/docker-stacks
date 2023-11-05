@@ -35,3 +35,7 @@ This image also contains everything in [`jupyter/scipy-notebook`](https://jupyte
 
 `rubydata/datascience-notebook` includes libraries for data analysis from the Julia, Python, and R libraries.
 This image also contains everything in [`jupyter/datascience-notebook`](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-datascience-notebook) and its ancestor images.
+
+## `rubydata/nlp-notebook`
+
+`rubydata/nlp-notebook` includes libraries for nlp analysis including ruby-spacy, entagger, and more!
