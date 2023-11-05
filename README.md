@@ -1,5 +1,7 @@
 # RubyData Docker Stacks
 
+[![CI](https://github.com/b08x/docker-stacks/actions/workflows/ci.yml/badge.svg)](https://github.com/b08x/docker-stacks/actions/workflows/ci.yml)
+
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/RubyData/docker-stacks/master?filepath=README.ipynb)
 
 RubyData Docker stacks are a set of ready-to-run Docker images containing Jupyter and data tools for Rubyists.
