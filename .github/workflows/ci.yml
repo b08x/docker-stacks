@@ -43,7 +43,7 @@ jobs:
         run: docker images --format '{{.Repository}}:{{.Tag}}\t{{.ID}}'
 
       - name: Login to DockerHub
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/development'
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}

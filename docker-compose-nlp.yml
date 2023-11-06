@@ -4,8 +4,8 @@ services:
   ruby-jupyter:
     image: ruby-notebook-nlp:latest
     build:
-      context: nlp/
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: nlp/Dockerfile
     volumes:
       - ./data/ruby_notebook:/home/jovyan/work
     environment:
