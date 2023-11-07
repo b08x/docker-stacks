@@ -10,6 +10,13 @@ source 'https://rubygems.org'
 #   gem 'rbplotly'
 # end
 
+git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+
+gem "rbplotly", git: "https://github.com/b08x/rbplotly.git", branch: "development"
+gem "nmatrix", git: "https://github.com/b08x/nmatrix.git", branch: "development"
+gem "nmatrix-lapacke", git: "https://github.com/b08x/nmatrix.git", branch: "development"
+gem "nmatrix-fftw", git: "https://github.com/b08x/nmatrix.git", branch: "development"
+
 gem 'activerecord'
 gem 'awesome_print'
 gem 'beckett'
