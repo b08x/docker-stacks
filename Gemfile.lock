@@ -1,0 +1,638 @@
+GIT
+  remote: https://github.com/b08x/nmatrix.git
+  revision: 84eb1fa191fc699211c330a4e87da26e69e975e2
+  branch: development
+  specs:
+    nmatrix (0.2.4)
+      packable (~> 1.3, >= 1.3.18)
+    nmatrix-fftw (0.2.4)
+      nmatrix (= 0.2.4)
+    nmatrix-lapacke (0.2.4)
+      nmatrix (= 0.2.4)
+
+GIT
+  remote: https://github.com/b08x/rbplotly.git
+  revision: 23cd37ccb9ca5f001c0917606b33b2c6e91530ef
+  branch: development
+  specs:
+    rbplotly (0.1.2)
+      faraday (>= 0.9)
+      launchy (>= 2.4)
+      uuidtools (>= 2.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    Ascii85 (1.1.0)
+    RubyInline (3.14.0)
+      ZenTest (~> 4.3)
+    ZenTest (4.12.1)
+    actionview (7.1.2)
+      activesupport (= 7.1.2)
+      builder (~> 3.1)
+      erubi (~> 1.11)
+      rails-dom-testing (~> 2.2)
+      rails-html-sanitizer (~> 1.6)
+    activemodel (7.1.2)
+      activesupport (= 7.1.2)
+    activerecord (7.1.2)
+      activemodel (= 7.1.2)
+      activesupport (= 7.1.2)
+      timeout (>= 0.4.0)
+    activesupport (7.1.2)
+      base64
+      bigdecimal
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      connection_pool (>= 2.2.5)
+      drb
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      mutex_m
+      tzinfo (~> 2.0)
+    addressable (2.8.5)
+      public_suffix (>= 2.0.2, < 6.0)
+    afm (0.2.2)
+    ast (2.4.2)
+    awesome_print (1.9.2)
+    baran (0.1.9)
+    base64 (0.2.0)
+    beckett (0.1.0)
+      kramdown
+    bigdecimal (3.1.4)
+    builder (3.2.4)
+    cairo (1.17.12)
+      native-package-installer (>= 1.0.3)
+      pkg-config (>= 1.2.2)
+      red-colors
+    cairo-gobject (4.2.0)
+      cairo (>= 1.16.2)
+      glib2 (= 4.2.0)
+    charty (0.2.12)
+      matplotlib (>= 1.2.0)
+      pandas (>= 0.3.5)
+      playwright-ruby-client
+      red-colors (>= 0.3.0)
+      red-datasets (>= 0.1.2)
+      red-palette (>= 0.5.0)
+    childprocess (4.1.0)
+    cli-ui (2.2.3)
+    cliner (1.0.33)
+    cmdparse (3.0.7)
+    coderay (1.1.3)
+    colorize (0.8.1)
+    colours (0.9.6)
+    composable_operations (0.10.1)
+      smart_properties (~> 1.10)
+    concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
+    crass (1.0.6)
+    csv (3.2.8)
+    daru (0.3)
+      packable (~> 1.3.13)
+    daru-data_tables (0.3.5)
+      daru
+    daru-view (0.2.6)
+      actionview
+      daru
+      daru-data_tables
+      google_visualr
+      lazy_high_charts
+      nyaplot
+      thor
+    data_uri (0.1.0)
+    date (3.3.4)
+    decisiontree (0.5.0)
+    diff-lcs (1.5.0)
+    docx (0.8.0)
+      nokogiri (~> 1.13, >= 1.13.0)
+      rubyzip (~> 2.0)
+    dotenv (2.8.1)
+    drb (2.2.0)
+      ruby2_keywords
+    drydock (0.6.9)
+    engtagger (0.4.0)
+      lru_redux
+    enumerable-statistics (2.0.7)
+    erubi (1.12.0)
+    event_stream_parser (0.3.0)
+    faraday (2.7.11)
+      base64
+      faraday-net_http (>= 2.0, < 3.1)
+      ruby2_keywords (>= 0.0.4)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
+    faraday-net_http (3.0.2)
+    ffi (1.16.3)
+    ffi-rzmq (2.0.7)
+      ffi-rzmq-core (>= 1.0.7)
+    ffi-rzmq-core (1.0.7)
+      ffi
+    fiddle (1.1.2)
+    fuzzy-string-match (1.0.1)
+      RubyInline (>= 3.8.6)
+    fuzzy_match (2.1.0)
+    fuzzy_tools (1.0.0)
+      RubyInline
+    geom2d (0.4.1)
+    gio2 (4.2.0)
+      fiddle
+      gobject-introspection (= 4.2.0)
+    glib2 (4.2.0)
+      native-package-installer (>= 1.0.3)
+      pkg-config (>= 1.3.5)
+    gnuplot (2.6.2)
+    gobject-introspection (4.2.0)
+      glib2 (= 4.2.0)
+    google_palm_api (0.1.3)
+      faraday (>= 2.0.1, < 3.0)
+    google_visualr (2.5.1)
+    graphr (0.2.1)
+    graphviz (1.2.1)
+      process-pipeline
+    hash-deep-merge (0.1.1)
+    hashery (2.1.2)
+    hexapdf (0.34.1)
+      cmdparse (~> 3.0, >= 3.0.3)
+      geom2d (~> 0.4, >= 0.4.1)
+      openssl (>= 2.2.1)
+    highline (2.1.0)
+    hiredis (0.6.3)
+    hollerback (0.1.0)
+    hugging-face (0.3.4)
+      faraday (>= 1.0)
+    i18n (1.14.1)
+      concurrent-ruby (~> 1.0)
+    io-console (0.6.0)
+    irb (1.9.0)
+      rdoc
+      reline (>= 0.3.8)
+    iruby (0.7.4)
+      data_uri (~> 0.1)
+      ffi-rzmq
+      irb
+      mime-types (>= 3.3.1)
+      multi_json (~> 1.11)
+      native-package-installer
+    jongleur (1.1.1)
+      graphviz (~> 1.1)
+      hollerback (~> 0.1)
+      os (~> 1.0)
+    json (2.6.3)
+    json-schema (4.0.0)
+      addressable (>= 2.8)
+    jsonl (0.1.5)
+    kramdown (2.4.0)
+      rexml
+    langchainrb (0.7.4)
+      baran (~> 0.1.9)
+      colorize (~> 0.8.1)
+      json-schema (~> 4.0.0)
+      matrix
+      pragmatic_segmenter (~> 0.3.0)
+      tiktoken_ruby (~> 0.0.5)
+      to_bool (~> 2.0.0)
+      zeitwerk (~> 2.5)
+    language_server-protocol (3.17.0.3)
+    launchy (2.5.2)
+      addressable (~> 2.8)
+    lazy_high_charts (1.6.1)
+      hash-deep-merge
+    lbfgsb (0.5.2)
+      numo-narray (>= 0.9.1)
+    lemmatizer (0.2.2)
+    lint_roller (1.1.0)
+    little-plugger (1.1.4)
+    llm_memory (0.1.1)
+    loggability (0.18.2)
+    logging (2.3.1)
+      little-plugger (~> 1.1)
+      multi_json (~> 1.14)
+    loofah (2.21.4)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.12.0)
+    lru_redux (1.1.0)
+    matplotlib (1.3.0)
+      pycall (>= 1.0.0)
+    matrix (0.4.2)
+    method_source (1.0.0)
+    mime-types (3.5.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2023.1003)
+    minitest (5.20.0)
+    mmh3 (1.2.0)
+    multi_json (1.15.0)
+    multipart-post (2.3.0)
+    mutex_m (0.2.0)
+    mysql2 (0.5.5)
+    native-package-installer (1.1.8)
+    nest (3.2.0)
+      redic
+    nokogiri (1.15.4-x86_64-linux)
+      racc (~> 1.4)
+    numo-gnuplot (0.2.4)
+    numo-linalg (0.1.7)
+      numo-narray (>= 0.9.1.4)
+    numo-narray (0.9.2.1)
+    numpy (0.4.0)
+      pycall (>= 1.2.0.beta1)
+    nyaplot (0.1.6)
+    ohm (3.1.1)
+      nest (~> 3)
+      redic (~> 1.5.0)
+      stal
+    ohm-contrib (3.0.0)
+      ohm (~> 3.0)
+    oj (3.16.1)
+    open-uri (0.4.0)
+      stringio
+      time
+      uri
+    open3 (0.2.0)
+    open4 (1.3.4)
+    openssl (3.2.0)
+    opn (1.0.59)
+    optimist (3.1.0)
+    os (1.1.4)
+    osc-ruby (1.1.4)
+    packable (1.3.18)
+    pandas (0.3.8)
+      numpy
+      pycall (>= 1.0.0)
+    parallel (1.23.0)
+    parser (3.2.2.4)
+      ast (~> 2.4.1)
+      racc
+    pastel (0.8.0)
+      tty-color (~> 0.5)
+    pdf-reader (2.11.0)
+      Ascii85 (~> 1.0)
+      afm (~> 0.2.1)
+      hashery (~> 2.0)
+      ruby-rc4
+      ttfunk
+    pdf_paradise (0.3.11)
+      cliner
+      colours
+      opn
+      save_file
+    pg (1.5.4)
+    pgvector (0.2.2)
+    pkg-config (1.5.5)
+    playwright-ruby-client (1.39.1)
+      concurrent-ruby (>= 1.1.6)
+      mime-types (>= 3.0)
+    poppler (4.2.0)
+      cairo-gobject (= 4.2.0)
+      gio2 (= 4.2.0)
+    pragmatic_segmenter (0.3.23)
+      unicode
+    pragmatic_tokenizer (3.2.0)
+      unicode
+    process-group (1.2.4)
+      process-terminal (~> 0.2.0)
+    process-pipeline (1.0.2)
+      process-group
+    process-terminal (0.2.0)
+      ffi
+    pry (0.14.2)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
+    pry-doc (1.4.0)
+      pry (~> 0.11)
+      yard (~> 0.9.11)
+    psych (5.1.1.1)
+      stringio
+    public_suffix (5.0.3)
+    pycall (1.5.1)
+    racc (1.7.3)
+    rails-dom-testing (2.2.0)
+      activesupport (>= 5.0.0)
+      minitest
+      nokogiri (>= 1.6)
+    rails-html-sanitizer (1.6.0)
+      loofah (~> 2.21)
+      nokogiri (~> 1.14)
+    rainbow (3.1.1)
+    rake (13.1.0)
+    rdatasets (0.7.0)
+      daru
+    rdoc (6.6.0)
+      psych (>= 4.0.0)
+    red-colors (0.3.0)
+      matrix
+    red-datasets (0.1.7)
+      csv (>= 3.2.4)
+      rexml
+      rubyzip
+    red-palette (0.5.0)
+      red-colors (>= 0.3.0)
+    redcarpet (3.6.0)
+    redic (1.5.3)
+      hiredis
+    redis (5.0.8)
+      redis-client (>= 0.17.0)
+    redis-client (0.18.0)
+      connection_pool
+    regexp_parser (2.8.2)
+    reline (0.4.0)
+      io-console (~> 0.5)
+    rexml (3.2.6)
+    roo (2.10.0)
+      nokogiri (~> 1)
+      rubyzip (>= 1.3.0, < 3.0.0)
+    rover-df (0.3.4)
+      numo-narray (>= 0.9.1.9)
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.2)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.6)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-support (3.12.1)
+    rubocop (1.57.2)
+      json (~> 2.3)
+      language_server-protocol (>= 3.17.0)
+      parallel (~> 1.10)
+      parser (>= 3.2.2.4)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.28.1, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 2.4.0, < 3.0)
+    rubocop-ast (1.30.0)
+      parser (>= 3.2.1.0)
+    rubocop-performance (1.19.1)
+      rubocop (>= 1.7.0, < 2.0)
+      rubocop-ast (>= 0.4.0)
+    ruby-openai (6.0.1)
+      event_stream_parser (>= 0.3.0, < 1.0.0)
+      faraday (>= 1)
+      faraday-multipart (>= 1)
+    ruby-progressbar (1.13.0)
+    ruby-rc4 (0.1.5)
+    ruby-spacy (0.2.2)
+      numpy (~> 0.4.0)
+      pycall (~> 1.5.1)
+      ruby-openai
+      terminal-table (~> 3.0.1)
+    ruby2_keywords (0.0.5)
+    rubydown (0.1.0)
+      daru (~> 0.2)
+      kramdown (~> 2.1)
+      numo-gnuplot (~> 0.2.4)
+      numo-narray (~> 0.9.1)
+      rbplotly (~> 0.1.2)
+    rubyzip (2.3.2)
+    rumale (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-clustering (~> 0.27.0)
+      rumale-core (~> 0.27.0)
+      rumale-decomposition (~> 0.27.0)
+      rumale-ensemble (~> 0.27.0)
+      rumale-evaluation_measure (~> 0.27.0)
+      rumale-feature_extraction (~> 0.27.0)
+      rumale-kernel_approximation (~> 0.27.0)
+      rumale-kernel_machine (~> 0.27.0)
+      rumale-linear_model (~> 0.27.0)
+      rumale-manifold (~> 0.27.0)
+      rumale-metric_learning (~> 0.27.0)
+      rumale-model_selection (~> 0.27.0)
+      rumale-naive_bayes (~> 0.27.0)
+      rumale-nearest_neighbors (~> 0.27.0)
+      rumale-neural_network (~> 0.27.0)
+      rumale-pipeline (~> 0.27.0)
+      rumale-preprocessing (~> 0.27.0)
+      rumale-tree (~> 0.27.0)
+    rumale-clustering (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+    rumale-core (0.27.0)
+      numo-narray (>= 0.9.1)
+    rumale-decomposition (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+    rumale-ensemble (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+      rumale-linear_model (~> 0.27.0)
+      rumale-model_selection (~> 0.27.0)
+      rumale-preprocessing (~> 0.27.0)
+      rumale-tree (~> 0.27.0)
+    rumale-evaluation_measure (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+    rumale-feature_extraction (0.27.0)
+      mmh3 (~> 1.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+    rumale-kernel_approximation (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+    rumale-kernel_machine (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+    rumale-linear_model (0.27.0)
+      lbfgsb (>= 0.3.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+    rumale-manifold (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+      rumale-decomposition (~> 0.27.0)
+    rumale-metric_learning (0.27.0)
+      lbfgsb (>= 0.3.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+      rumale-decomposition (~> 0.27.0)
+    rumale-model_selection (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+      rumale-evaluation_measure (~> 0.27.0)
+      rumale-preprocessing (~> 0.27.0)
+    rumale-naive_bayes (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+    rumale-nearest_neighbors (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+    rumale-neural_network (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+    rumale-pipeline (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+    rumale-preprocessing (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+    rumale-tree (0.27.0)
+      numo-narray (>= 0.9.1)
+      rumale-core (~> 0.27.0)
+    safe_ruby (1.0.4)
+      childprocess (>= 0.3.9)
+    save_file (1.0.34)
+    scalpel (0.2.1)
+    sequel (5.74.0)
+      bigdecimal
+    smart_properties (1.17.0)
+    sqlite3 (1.6.8-x86_64-linux)
+    stal (0.3.0)
+      redic (~> 1.5)
+    standard (1.32.0)
+      language_server-protocol (~> 3.17.0.2)
+      lint_roller (~> 1.0)
+      rubocop (~> 1.57.2)
+      standard-custom (~> 1.0.0)
+      standard-performance (~> 1.2)
+    standard-custom (1.0.2)
+      lint_roller (~> 1.0)
+      rubocop (~> 1.50)
+    standard-performance (1.2.1)
+      lint_roller (~> 1.1)
+      rubocop-performance (~> 1.19.1)
+    stringio (3.0.9)
+    terminal-table (3.0.2)
+      unicode-display_width (>= 1.1.1, < 3)
+    thor (1.3.0)
+    tiktoken_ruby (0.0.6-x86_64-linux)
+    time (0.3.0)
+      date
+    timeout (0.4.1)
+    to_bool (2.0.0)
+    tomoto (0.3.3-x86_64-linux)
+    ttfunk (1.7.0)
+    tty-color (0.6.0)
+    tty-config (0.6.0)
+    tty-cursor (0.7.1)
+    tty-prompt (0.23.1)
+      pastel (~> 0.8)
+      tty-reader (~> 0.8)
+    tty-reader (0.9.0)
+      tty-cursor (~> 0.7)
+      tty-screen (~> 0.8)
+      wisper (~> 2.0)
+    tty-screen (0.8.1)
+    tzinfo (2.0.6)
+      concurrent-ruby (~> 1.0)
+    unicode (0.4.4.4)
+    unicode-display_width (2.5.0)
+    unicode_plot (0.0.5)
+      enumerable-statistics (>= 2.0.1)
+    uri (0.13.0)
+    uuidtools (2.2.0)
+    vega (0.3.1)
+    verbal_expressions (0.1.5)
+    wikipedia-client (1.17.0)
+      addressable (~> 2.7)
+    wisper (2.0.1)
+    wordnet (1.2.0)
+      loggability (~> 0.18)
+      pg (~> 1.4)
+      sequel (~> 5.64)
+      sqlite3 (~> 1.5)
+    yard (0.9.34)
+    zeitwerk (2.6.12)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  activerecord
+  awesome_print
+  beckett
+  charty (>= 0.2.12)
+  cli-ui
+  composable_operations
+  daru
+  daru-view
+  decisiontree
+  docx (~> 0.8.0)
+  dotenv
+  drydock
+  engtagger
+  enumerable-statistics
+  ffi-rzmq
+  fuzzy-string-match
+  fuzzy_match
+  fuzzy_tools
+  gnuplot
+  google_palm_api (>= 0.1.3)
+  graphr
+  hexapdf
+  highline
+  hugging-face (~> 0.3.4)
+  irb (>= 1.3.8.pre.9)
+  iruby (>= 0.7.4)
+  jongleur
+  json
+  jsonl
+  kramdown
+  langchainrb
+  lemmatizer
+  llm_memory
+  logging
+  matplotlib (>= 1.2.0)
+  mysql2
+  nmatrix!
+  nmatrix-fftw!
+  nmatrix-lapacke!
+  nokogiri
+  numo-linalg
+  numo-narray
+  numpy (>= 0.4.0)
+  ohm
+  ohm-contrib
+  oj
+  open-uri
+  open3
+  open4
+  openssl
+  optimist
+  osc-ruby
+  pandas (>= 0.3.8)
+  parallel
+  pdf-reader
+  pdf_paradise
+  pg
+  pgvector
+  poppler
+  pragmatic_segmenter
+  pragmatic_tokenizer
+  pry
+  pry-doc
+  pycall (>= 1.4.1)
+  rake
+  rbplotly!
+  rdatasets
+  redcarpet
+  redic
+  redis
+  roo (~> 2.10.0)
+  rover-df
+  rspec
+  ruby-openai
+  ruby-spacy
+  rubydown
+  rumale
+  safe_ruby
+  scalpel
+  sequel
+  sqlite3
+  standard
+  tomoto
+  tty-config
+  tty-prompt
+  unicode_plot (>= 0.0.5)
+  vega
+  verbal_expressions
+  wikipedia-client (~> 1.17.0)
+  wordnet
+
+BUNDLED WITH
+   2.4.22

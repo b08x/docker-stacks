@@ -7,7 +7,9 @@ services:
       context: .
       dockerfile: nlp/Dockerfile
     volumes:
-      - ./data/ruby_notebook:/home/jovyan/work
+      - /home/b08x:/home/jovyan/Documents:ro
+      - ./data/notebooks:/home/jovyan/work
+      - /mnt/tmpfs/output:/home/jovyan/output
     environment:
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       PUID: 1000
@@ -15,6 +17,6 @@ services:
     ports:
       - 8888:8888
 
-volumes:
-  ruby_notebook:
-    driver: local
+# volumes:
+#   ruby_notebook:
+#     driver: local
