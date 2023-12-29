@@ -56,39 +56,55 @@ RUN apt update && \
     zlib1g-dev && \
     echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main' >> /etc/apt/sources.list && \
     echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-11 main' >> /etc/apt/sources.list && \
-    wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|apt-key add - && \  
+    wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|apt-key add - && \
     apt-get update -qq && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
-  
-  RUN curl -sfSL -o /tmp/apache-arrow-apt-source-latest.deb \
-      https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb && \
-      apt install -y --no-install-recommends \
-      /tmp/apache-arrow-apt-source-latest.deb && \
-      rm -f /tmp/apache-arrow-apt-source-latest.deb && \
-      apt update -qq && \
-      apt install -y \
-      libarrow-dev=11.0.0-1 \
-      libarrow-cuda-dev=11.0.0-1 \
-      libarrow-cuda-glib-dev=11.0.0-1 \
-      gir1.2-arrow-cuda-1.0=11.0.0-1 \
-      gir1.2-plasma-1.0=11.0.0-1 \
-      libarrow-glib-dev=11.0.0-1 \
-      libplasma-dev=11.0.0-1 \
-      libarrow-dataset-dev=11.0.0-1 \
-      libarrow-flight-dev=11.0.0-1 \
-      libplasma-glib-dev=11.0.0-1 \
-      libgandiva-dev=11.0.0-1 \
-      libgandiva-glib-dev=11.0.0-1 \
-      libparquet-dev=11.0.0-1 \
-      libparquet-glib-dev=11.0.0-1 \
-      libgirepository1.0-dev \
-      gir1.2-arrow-1.0=11.0.0-1 \
-      gir1.2-gandiva-1.0=11.0.0-1 \
-      gir1.2-parquet-1.0=11.0.0-1 \
-      gir1.2-plasma-1.0=11.0.0-1 && \
-      apt-get autoremove -y && \
-      rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -pv /home/$USER/packages
+
+COPY packages packages/
+
+RUN curl -sfSL -o /tmp/apache-arrow-apt-source-latest.deb \
+    https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb && \
+    apt install -y --no-install-recommends \
+    /tmp/apache-arrow-apt-source-latest.deb && \
+    rm -f /tmp/apache-arrow-apt-source-latest.deb && \
+    apt update -qq && \
+    apt install -y \
+    libgirepository1.0-dev
+
+RUN ls -lah && apt install -y --no-install-recommends \
+    /home/$USER/packages/gir1.2-arrow-1.0_11.0.0-1_amd64.deb \
+    /home/$USER/packages/gir1.2-arrow-cuda-1.0_11.0.0-1_amd64.deb \
+    /home/$USER/packages/gir1.2-gandiva-1.0_11.0.0-1_amd64.deb \
+    /home/$USER/packages/gir1.2-parquet-1.0_11.0.0-1_amd64.deb \
+    /home/$USER/packages/gir1.2-plasma-1.0_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libarrow-cuda-dev_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libarrow-cuda-glib-dev_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libarrow-cuda-glib1100_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libarrow-cuda1100_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libarrow-dataset-dev_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libarrow-dataset1100_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libarrow-dev_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libarrow-flight-dev_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libarrow-flight1100_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libarrow-glib-dev_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libarrow-glib1100_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libgandiva-dev_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libgandiva-glib-dev_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libgandiva-glib1100_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libgandiva1100_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libparquet-dev_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libparquet-glib-dev_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libparquet-glib1100_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libparquet1100_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libplasma-dev_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libplasma-glib-dev_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libplasma-glib1100_11.0.0-1_amd64.deb \
+    /home/$USER/packages/libplasma1100_11.0.0-1_amd64.deb && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy Ruby 3.1.3 from rubylang/ruby
 COPY --from=rubylang/ruby:3.1.3-focal \
@@ -133,7 +149,7 @@ COPY --from=rubylang/ruby:3.1.3-focal \
   /usr/local/share/man/man1/ruby.1 \
   /usr/local/share/man/man1/
 
-RUN gem update --system 3.4.18
+RUN gem update --system 3.4.22
 
 WORKDIR /home/$USER
 

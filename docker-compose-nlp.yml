@@ -7,15 +7,14 @@ services:
       context: .
       dockerfile: nlp/Dockerfile
     volumes:
-      - /home/b08x:/home/jovyan/Documents:ro
+      - $HOME/Public:/home/jovyan/Public:ro
       - ./data/notebooks:/home/jovyan/work
-      - /mnt/tmpfs/output:/home/jovyan/output
     environment:
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       PUID: 1000
       PGID: 1041
     ports:
-      - 8888:8888
+      - 8890:8888
 
 # volumes:
 #   ruby_notebook:

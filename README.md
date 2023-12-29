@@ -7,6 +7,8 @@
 RubyData Docker stacks are a set of ready-to-run Docker images containing Jupyter and data tools for Rubyists.
 This repository is based on [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks).
 
+https://apache.jfrog.io/ui/native/arrow/ubuntu/pool/focal/main/a/apache-arrow/
+
 ## Quick Start
 
 You can try the recent build of the RubyData/minimal-notebook image on mybinder.org by click the link below:
