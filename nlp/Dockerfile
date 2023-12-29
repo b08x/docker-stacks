@@ -17,94 +17,94 @@ RUN echo "$USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/99-$USER && chmod 0440 
 ENV APACHE_ARROW_VERSION=10.0.0
 
 RUN apt update && \
-    apt install -y -V --no-install-recommends apt-transport-https \
-    curl gnupg lsb-release apt-utils locate \
-    ca-certificates \
-    git \
-    git-lfs \
-    libcairo2-dev \
-    libczmq-dev \
-    libffi-dev \
-    libgdbm-dev \
-    libgmp-dev \
-    liblapacke-dev \
-    libmysqlclient-dev \
-    libncurses5-dev \
-    libopenblas-dev \
-    libpoppler-glib-dev \
-    libpq-dev \
-    libreadline-dev \
-    libfftw3-dev \
-    libsqlite3-dev \
-    libssl-dev \
-    libxml2-dev \
-    libxslt1-dev \
-    libyaml-dev \
-    libzmq3-dev \
-    libglib2.0-dev \
-    gnuplot \
-    graphviz \
-    mysql-client \
-    openssl \
-    pkg-config \
-    postgresql-client \
-    ruby-psych \
-    software-properties-common \
-    sqlite3 \
-    tzdata \
-    wget \
-    zlib1g-dev && \
-    echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main' >> /etc/apt/sources.list && \
-    echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-11 main' >> /etc/apt/sources.list && \
-    wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|apt-key add - && \
-    apt-get update -qq && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
+  apt install -y -V --no-install-recommends apt-transport-https \
+  curl gnupg lsb-release apt-utils locate \
+  ca-certificates \
+  git \
+  git-lfs \
+  libcairo2-dev \
+  libczmq-dev \
+  libffi-dev \
+  libgdbm-dev \
+  libgmp-dev \
+  liblapacke-dev \
+  libmysqlclient-dev \
+  libncurses5-dev \
+  libopenblas-dev \
+  libpoppler-glib-dev \
+  libpq-dev \
+  libreadline-dev \
+  libfftw3-dev \
+  libsqlite3-dev \
+  libssl-dev \
+  libxml2-dev \
+  libxslt1-dev \
+  libyaml-dev \
+  libzmq3-dev \
+  libglib2.0-dev \
+  gnuplot \
+  graphviz \
+  mysql-client \
+  openssl \
+  pkg-config \
+  postgresql-client \
+  ruby-psych \
+  software-properties-common \
+  sqlite3 \
+  tzdata \
+  wget \
+  zlib1g-dev && \
+  echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main' >> /etc/apt/sources.list && \
+  echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-11 main' >> /etc/apt/sources.list && \
+  wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|apt-key add - && \
+  apt-get update -qq && \
+  apt-get autoremove -y && \
+  rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -pv /home/$USER/packages
 
 COPY packages packages/
 
 RUN curl -sfSL -o /tmp/apache-arrow-apt-source-latest.deb \
-    https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb && \
-    apt install -y --no-install-recommends \
-    /tmp/apache-arrow-apt-source-latest.deb && \
-    rm -f /tmp/apache-arrow-apt-source-latest.deb && \
-    apt update -qq && \
-    apt install -y \
-    libgirepository1.0-dev
+  https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb && \
+  apt install -y --no-install-recommends \
+  /tmp/apache-arrow-apt-source-latest.deb && \
+  rm -f /tmp/apache-arrow-apt-source-latest.deb && \
+  apt update -qq && \
+  apt install -y \
+  libgirepository1.0-dev
 
 RUN ls -lah && apt install -y --no-install-recommends \
-    /home/$USER/packages/gir1.2-arrow-1.0_11.0.0-1_amd64.deb \
-    /home/$USER/packages/gir1.2-arrow-cuda-1.0_11.0.0-1_amd64.deb \
-    /home/$USER/packages/gir1.2-gandiva-1.0_11.0.0-1_amd64.deb \
-    /home/$USER/packages/gir1.2-parquet-1.0_11.0.0-1_amd64.deb \
-    /home/$USER/packages/gir1.2-plasma-1.0_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-cuda-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-cuda-glib-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-cuda-glib1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-cuda1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-dataset-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-dataset1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-flight-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-flight1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-glib-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-glib1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libgandiva-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libgandiva-glib-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libgandiva-glib1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libgandiva1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libparquet-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libparquet-glib-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libparquet-glib1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libparquet1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libplasma-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libplasma-glib-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libplasma-glib1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libplasma1100_11.0.0-1_amd64.deb && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
+  /home/$USER/packages/gir1.2-arrow-1.0_11.0.0-1_amd64.deb \
+  /home/$USER/packages/gir1.2-arrow-cuda-1.0_11.0.0-1_amd64.deb \
+  /home/$USER/packages/gir1.2-gandiva-1.0_11.0.0-1_amd64.deb \
+  /home/$USER/packages/gir1.2-parquet-1.0_11.0.0-1_amd64.deb \
+  /home/$USER/packages/gir1.2-plasma-1.0_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-cuda-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-cuda-glib-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-cuda-glib1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-cuda1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-dataset-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-dataset1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-flight-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-flight1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-glib-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-glib1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libgandiva-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libgandiva-glib-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libgandiva-glib1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libgandiva1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libparquet-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libparquet-glib-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libparquet-glib1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libparquet1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libplasma-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libplasma-glib-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libplasma-glib1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libplasma1100_11.0.0-1_amd64.deb && \
+  apt-get autoremove -y && \
+  rm -rf /var/lib/apt/lists/*
 
 # Copy Ruby 3.1.3 from rubylang/ruby
 COPY --from=rubylang/ruby:3.1.3-focal \
@@ -163,20 +163,22 @@ RUN chown -R $USER:$GROUP_ID /home/$USER
 
 USER $USER
 
+RUN conda update jupyterlab -y && conda install pip -y
+
 # NOTE: DO NOT CHANGE the version in the path of gem's bin directory
 ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$HOME/.local/bin:$PATH
 
 RUN pip install spacy && \
-    python3 -m spacy download en_core_web_sm && \
-    python3 -m spacy download en_core_web_lg
+  python3 -m spacy download en_core_web_sm && \
+  python3 -m spacy download en_core_web_lg
 
 ENV BUNDLE_PATH $HOME/.local/share/gem
 
 RUN echo "gem: --user-install" >> $HOME/.gemrc
 
 RUN gem install ferret-0.11.9.0.gem && \
-    bundle config build.redic --with-cxx="clang++" --with-cflags="-std=c++0x" && \
-    bundle install
+  bundle config build.redic --with-cxx="clang++" --with-cflags="-std=c++0x" && \
+  bundle install
 
 # To fix: qt.qpa.xcb could not connect to display
 ENV QT_QPA_PLATFORM offscreen
