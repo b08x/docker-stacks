@@ -163,14 +163,16 @@ RUN chown -R $USER:$GROUP_ID /home/$USER
 
 USER $USER
 
-RUN conda update jupyterlab -y && conda install pip -y
+RUN pip install spacy && \
+  python3 -m spacy download en_core_web_sm && \
+  python3 -m spacy download en_core_web_lg
+
+#RUN conda update jupyterlab -y && conda install pip -y
+RUN pip install 'jupyter_ai>=1.0,<2.0'
 
 # NOTE: DO NOT CHANGE the version in the path of gem's bin directory
 ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$HOME/.local/bin:$PATH
 
-RUN pip install spacy && \
-  python3 -m spacy download en_core_web_sm && \
-  python3 -m spacy download en_core_web_lg
 
 ENV BUNDLE_PATH $HOME/.local/share/gem
 
