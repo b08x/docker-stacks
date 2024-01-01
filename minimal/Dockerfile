@@ -53,7 +53,7 @@ RUN apt-get update && \
             tzdata \
             zlib1g-dev \
             wget && \
-    rm -rf /var/lib/apt/lists/*
+     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy Ruby 3.1.3 from rubylang/ruby
 
@@ -99,6 +99,14 @@ COPY --from=rubylang/ruby:3.1.3-focal \
      /usr/local/share/man/man1/ruby.1 \
      /usr/local/share/man/man1/
 
+WORKDIR /home/$USER
+
+COPY minimal/Gemfile .
+
+RUN mkdir -pv output && chmod 2775 output
+
+RUN chown -R $USER:$GROUP_ID /home/$USER
+
 USER $NB_UID
 
 RUN echo "gem: --user-install" >> $HOME/.gemrc
@@ -106,65 +114,8 @@ RUN echo "gem: --user-install" >> $HOME/.gemrc
 # NOTE: DO NOT CHANGE the version in the path of gem's bin directory
 ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$PATH
 
-# Install basic gems
-RUN \
-    gem install irb -v ">= 1.3.8.pre.9" && \
-    gem install iruby -v ">= 0.7.4" && \
-    gem install pycall -v ">= 1.4.1" && \
-    gem install \
-          activesupport \
-          awesome_print \
-          bcrypt_pbkdf \
-          bundler \
-          childprocess \
-          colorize \
-          coltrane \
-          debug \
-          drydock \
-          ed25519 \
-          eventmachine \
-          ffi \
-          fractional \
-          geo_coord \
-          highline \
-          i18n \
-          irb \
-          json \
-          jsonl \
-          kramdown \
-          langchainrb \
-          logging \
-          minitest \
-          mocha \
-          multi_json \
-          net-ssh \
-          open3 \
-          open4 \
-          parallel \
-          pastel \
-          pg \
-          pry \
-          pry-doc \
-          psych \
-          rake \
-          rdoc \
-          rexml \
-          rouge \
-          ruby-lsp \
-          ruby-openai \
-          rugged \
-          ruport \
-          sequel \
-          sqlite3 \
-          sync \
-          sys-proctable \
-          treetop \
-          tty-box \
-          tty-command \
-          tty-config \
-          tty-prompt \
-          tty-screen \
-          yaml
+ENV BUNDLE_PATH $HOME/.local/share/gem
 
+RUN bundle install
 
 RUN iruby register --force
