@@ -31,12 +31,12 @@ jobs:
         with:
           ruby-version: "3.1"
 
-      # - name: Build images
-      #   run: rake build/${{ matrix.image_base_name }}
-
       - name: Build images
-        run: |
-          docker build -f ${{ matrix.image_base_name }}/Dockerfile --rm --force-rm -t b08x/${{ matrix.image_base_name }}-notebook:latest .
+        run: rake build/${{ matrix.image_base_name }}
+
+      # - name: Build images
+      #   run: |
+      #     docker build -f ${{ matrix.image_base_name }}/Dockerfile --rm --force-rm -t b08x/${{ matrix.image_base_name }}-notebook:latest .
 
       - name: Tag
         run: |
