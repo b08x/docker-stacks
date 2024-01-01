@@ -1,28 +1,28 @@
-# RubyData Docker Stacks
+# RubyData Jupyter Docker Stacks
 
 [![CI](https://github.com/b08x/docker-stacks/actions/workflows/ci.yml/badge.svg?branch=development)](https://github.com/b08x/docker-stacks/actions/workflows/ci.yml)
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/RubyData/docker-stacks/master?filepath=README.ipynb)
+The RubyData Jupyter Notebook Docker Stack is designed to provide a seamless environment for data processing and analysis using Ruby and Jupyter notebooks. This stack includes a curated selection of essential Ruby gems to facilitate efficient data extraction, transformation, and loading (ETL) processes.
 
 RubyData Docker stacks are a set of ready-to-run Docker images containing Jupyter and data tools for Rubyists.
-This repository is based on [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks).
 
-https://apache.jfrog.io/ui/native/arrow/ubuntu/pool/focal/main/a/apache-arrow/
+This repository is based on [rubydata/docker-stacks](https://github.com/RubyData/docker-stacks).
+
 
 ## Quick Start
 
-You can try the recent build of the RubyData/minimal-notebook image on mybinder.org by click the link below:
+### Minimal Image
 
-https://mybinder.org/v2/gh/RubyData/docker-stacks/master?filepath=README.ipynb
+### Data Science Image
 
-Otherwise, you can launch a single Jupyter Notebook server in a Docker container.  Two Docker images are available. You can know which one is suitable for you in [this document](docs/how_to_select.md).
+### NLP Image
 
 ## How to run on docker in your machine
 
-The following command pulls the latest `rubydata/datascience-notebook` image from DockerHub if it isn't available on the local machine.  It then starts a container running a Jupyter Notebook system and exposes the 8888 port so that you can connect to Jupyter Notebook.  You can see the URL of `http://<hostname>:8888/?token=<token>` in the server log in the terminal.  Visiting this URL in a Web browser, you can see Jupyter Notebook dashboard page on the browser.
+The following command pulls the latest `b08x/datascience-notebook` image from DockerHub if it isn't available on the local machine.  It then starts a container running a Jupyter Notebook system and exposes the 8888 port so that you can connect to Jupyter Notebook.  You can see the URL of `http://<hostname>:8888/?token=<token>` in the server log in the terminal.  Visiting this URL in a Web browser, you can see Jupyter Notebook dashboard page on the browser.
 
 ```
-docker run -p 8888:8888 rubydata/datascience-notebook
+docker run -p 8888:8888 b08x/datascience-notebook
 ```
 
 ## Lisence

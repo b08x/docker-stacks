@@ -1,4 +1,4 @@
-ARG BASE_IMAGE_TAG=b68a9269ad9c
+ARG BASE_IMAGE_TAG=8f63ea6c09f2
 FROM b08x/datascience-notebook:$BASE_IMAGE_TAG
 
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
