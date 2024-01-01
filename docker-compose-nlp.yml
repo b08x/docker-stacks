@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   ruby-jupyter:
-    image: ruby-notebook-nlp:latest
+    image: b08x/nlp-notebook:latest
     build:
       context: .
       dockerfile: nlp/Dockerfile
@@ -14,8 +14,7 @@ services:
       PUID: 1000
       PGID: 1041
     ports:
-      - 8890:8888
-
+      - 8888:8888
 # volumes:
 #   ruby_notebook:
 #     driver: local

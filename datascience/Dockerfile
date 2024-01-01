@@ -1,115 +1,70 @@
-ARG BASE_IMAGE_TAG=f3079808ca8c
-FROM jupyter/datascience-notebook:$BASE_IMAGE_TAG
+ARG BASE_IMAGE_TAG=latest
+FROM b08x/minimal-notebook:latest
 
-LABEL maintainer="Kenta Murata <mrkn@mrkn.jp>"
+LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 
 USER root
 
-# Pre-requisites
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
             ca-certificates \
-            curl \
-            gcc \
-            libczmq-dev \
-            libffi-dev \
-            libgdbm-dev \
-            libgmp-dev \
-            liblapacke-dev \
-            libmysqlclient-dev \
-            libncurses5-dev \
-            libopenblas-dev \
-            libpq-dev \
-            libreadline-dev \
-            libsqlite3-dev \
-            libssl-dev \
-            libxml2-dev \
-            libxslt1-dev \
-            libyaml-dev \
-            libzmq3-dev \
-            mysql-client \
-            pkg-config \
-            postgresql-client \
-            sqlite3 \
-            tzdata \
-            zlib1g-dev && \
+            gpg-agent
+
+# Pre-requisites
+RUN echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main' >> /etc/apt/sources.list && \
+    echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-11 main' >> /etc/apt/sources.list && \
+    wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|apt-key add - && \
+    apt-get update -qq && \
+    apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
 # Apache Arrow
-
 ENV APACHE_ARROW_VERSION=10.0.0
-RUN apt update && \
-    apt install -y --no-install-recommends \
-        apt-transport-https \
-        lsb-release \
-        && \
-    \
-    curl -sfSL -o /tmp/apache-arrow-apt-source-latest.deb \
-         https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb && \
-    apt install -y --no-install-recommends \
-        /tmp/apache-arrow-apt-source-latest.deb && \
-    rm -f /tmp/apache-arrow-apt-source-latest.deb && \
-    \
-    apt update && \
-    apt install -y --no-install-recommends \
-        libarrow-dev \
-        libarrow-glib-dev \
-        libarrow-dataset-dev \
-        libarrow-flight-dev \
-        libplasma-dev \
-        libplasma-glib-dev \
-        libgandiva-dev \
-        libgandiva-glib-dev \
-        libparquet-dev \
-        libparquet-glib-dev \
-        libgirepository1.0-dev \
-        && \
-    \
-    rm -rf /var/lib/apt/lists/*
 
-# Copy Ruby 3.1.3 from rubylang/ruby
+RUN curl -sfSL -o /tmp/apache-arrow-apt-source-latest.deb \
+  https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb && \
+  apt install -y --install-recommends \
+  /tmp/apache-arrow-apt-source-latest.deb && \
+  rm -f /tmp/apache-arrow-apt-source-latest.deb && \
+  apt update -qq && \
+  apt install -y \
+  libgirepository1.0-dev
 
-COPY --from=rubylang/ruby:3.1.3-focal \
-     /usr/local/bin/bundle \
-     /usr/local/bin/bundler \
-     /usr/local/bin/erb \
-     /usr/local/bin/gem \
-     /usr/local/bin/irb \
-     /usr/local/bin/racc \
-     /usr/local/bin/rake \
-     /usr/local/bin/rdoc \
-     /usr/local/bin/ri \
-     /usr/local/bin/ruby \
-     /usr/local/bin/
+RUN mkdir -pv /home/$USER/packages
 
-COPY --from=rubylang/ruby:3.1.3-focal \
-     /usr/local/etc/gemrc \
-     /usr/local/etc/
+COPY packages packages/
 
-# NOTE: DO NOT CHANGE the version in the path of include directory
-COPY --from=rubylang/ruby:3.1.3-focal \
-     /usr/local/include/ruby-3.1.0/ \
-     /usr/local/include/ruby-3.1.0/
-
-COPY --from=rubylang/ruby:3.1.3-focal \
-     /usr/local/lib/libruby.so \
-     /usr/local/lib/libruby.so.* \
-     /usr/local/lib/
-
-COPY --from=rubylang/ruby:3.1.3-focal \
-     /usr/local/lib/pkgconfig/ \
-     /usr/local/lib/pkgconfig/
-
-COPY --from=rubylang/ruby:3.1.3-focal \
-     /usr/local/lib/ruby/ \
-     /usr/local/lib/ruby/
-
-COPY --from=rubylang/ruby:3.1.3-focal \
-     /usr/local/share/man/man1/erb.1 \
-     /usr/local/share/man/man1/irb.1 \
-     /usr/local/share/man/man1/ri.1 \
-     /usr/local/share/man/man1/ruby.1 \
-     /usr/local/share/man/man1/
+RUN apt install -y --no-install-recommends \
+  /home/$USER/packages/gir1.2-arrow-1.0_11.0.0-1_amd64.deb \
+  /home/$USER/packages/gir1.2-arrow-cuda-1.0_11.0.0-1_amd64.deb \
+  /home/$USER/packages/gir1.2-gandiva-1.0_11.0.0-1_amd64.deb \
+  /home/$USER/packages/gir1.2-parquet-1.0_11.0.0-1_amd64.deb \
+  /home/$USER/packages/gir1.2-plasma-1.0_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-cuda-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-cuda-glib-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-cuda-glib1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-cuda1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-dataset-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-dataset1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-flight-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-flight1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-glib-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libarrow-glib1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libgandiva-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libgandiva-glib-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libgandiva-glib1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libgandiva1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libparquet-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libparquet-glib-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libparquet-glib1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libparquet1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libplasma-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libplasma-glib-dev_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libplasma-glib1100_11.0.0-1_amd64.deb \
+  /home/$USER/packages/libplasma1100_11.0.0-1_amd64.deb && \
+  apt-get autoremove -y && \
+  rm -rf /var/lib/apt/lists/*
 
 USER $NB_UID
 
@@ -129,6 +84,10 @@ RUN \
     gem install charty -v ">= 0.2.12" && \
     gem install red-datasets -v ">= 0.1.4" && \
     gem install unicode_plot -v ">= 0.0.5" && \
+    gem install red_amber -v "0.4.2" && \
+    gem install red-arrow -v "11.0.0" && \
+    gem install red-gandiva -v "11.0.0" && \
+    gem install red-parquet -v "11.0.0" && \
     \
     gem install \
         activerecord \
@@ -143,20 +102,15 @@ RUN \
         numpy \
         numo-narray \
         numo-linalg \
-        pandas \
         pg \
         pry \
         pry-doc \
         rbplotly \
-        red_amber \
-        red-arrow \
         red-arrow-numo-narray \
         red-chainer \
         red-datasets-arrow \
         red-datasets-daru \
         red-datasets-pandas \
-        red-gandiva \
-        red-parquet \
         red-plasma \
         rumale \
         sqlite3

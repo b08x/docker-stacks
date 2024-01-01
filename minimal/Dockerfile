@@ -5,12 +5,27 @@ LABEL maintainer="Kenta Murata <mrkn@mrkn.jp>"
 
 USER root
 
+ENV USER jovyan
+
+ARG GROUP_ID=1041
+
+RUN groupadd -g $GROUP_ID devops
+
+RUN usermod -a -G sudo $USER && usermod -a -G $GROUP_ID $USER
+
+RUN echo "$USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/99-$USER && chmod 0440 /etc/sudoers.d/99-$USER
+
 # Pre-requisites
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y -V --no-install-recommends \
+            apt-transport-https \
+            gnupg lsb-release apt-utils locate \
             ca-certificates \
             curl \
+            cmake \
             gcc \
+            git \
+            git-lfs \
             libczmq-dev \
             libffi-dev \
             libgdbm-dev \
@@ -27,45 +42,17 @@ RUN apt-get update && \
             libxslt1-dev \
             libyaml-dev \
             libzmq3-dev \
+            neovim \
+            openssl \
+            ruby-psych \
+            software-properties-common \
             mysql-client \
             pkg-config \
             postgresql-client \
             sqlite3 \
             tzdata \
-            zlib1g-dev && \
-    rm -rf /var/lib/apt/lists/*
-
-# Apache Arrow
-
-ENV APACHE_ARROW_VERSION=10.0.0
-
-RUN apt update && \
-    apt install -y --no-install-recommends \
-        apt-transport-https \
-        lsb-release \
-        && \
-    \
-    curl -sfSL -o /tmp/apache-arrow-apt-source-latest.deb \
-         https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb && \
-    apt install -y --no-install-recommends \
-        /tmp/apache-arrow-apt-source-latest.deb && \
-    rm -f /tmp/apache-arrow-apt-source-latest.deb && \
-    \
-    apt update && \
-    apt install -y --no-install-recommends \
-        libarrow-dev \
-        libarrow-glib-dev \
-        libarrow-dataset-dev \
-        libarrow-flight-dev \
-        libplasma-dev \
-        libplasma-glib-dev \
-        libgandiva-dev \
-        libgandiva-glib-dev \
-        libparquet-dev \
-        libparquet-glib-dev \
-        libgirepository1.0-dev \
-        && \
-    \
+            zlib1g-dev \
+            wget && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy Ruby 3.1.3 from rubylang/ruby
@@ -124,44 +111,60 @@ RUN \
     gem install irb -v ">= 1.3.8.pre.9" && \
     gem install iruby -v ">= 0.7.4" && \
     gem install pycall -v ">= 1.4.1" && \
-    gem install numpy -v ">= 0.4.0" && \
-    gem install matplotlib -v ">= 1.2.0" && \
-    gem install pandas -v ">= 0.3.8" && \
-    gem install charty -v ">= 0.2.12" && \
-    gem install red-datasets -v ">= 0.1.4" && \
-    gem install unicode_plot -v ">= 0.0.5" && \
-    \
     gem install \
-        activerecord \
-        awesome_print \
-        daru \
-        daru-view \
-        enumerable-statistics \
-        ffi-rzmq \
-        mysql2 \
-        nmatrix \
-        nmatrix-lapacke \
-        numpy \
-        numo-narray \
-        numo-linalg \
-        pandas \
-        pg \
-        pry \
-        pry-doc \
-        rbplotly \
-        red_amber \
-        red-arrow \
-        red-arrow-numo-narray \
-        # red-arrow-nmatrix \
-        red-chainer \
-        red-datasets-arrow \
-        red-datasets-daru \
-        red-datasets-pandas \
-        red-gandiva \
-        red-parquet \
-        red-plasma \
-        rover-df \
-        rumale \
-        sqlite3
+          activesupport \
+          awesome_print \
+          bcrypt_pbkdf \
+          bundler \
+          childprocess \
+          colorize \
+          coltrane \
+          debug \
+          drydock \
+          ed25519 \
+          eventmachine \
+          ffi \
+          fractional \
+          geo_coord \
+          highline \
+          i18n \
+          irb \
+          json \
+          jsonl \
+          kramdown \
+          langchainrb \
+          logging \
+          minitest \
+          mocha \
+          multi_json \
+          net-ssh \
+          open3 \
+          open4 \
+          parallel \
+          pastel \
+          pg \
+          pry \
+          pry-doc \
+          psych \
+          rake \
+          rdoc \
+          rexml \
+          rouge \
+          ruby-lsp \
+          ruby-openai \
+          rugged \
+          ruport \
+          sequel \
+          sqlite3 \
+          sync \
+          sys-proctable \
+          treetop \
+          tty-box \
+          tty-command \
+          tty-config \
+          tty-prompt \
+          tty-screen \
+          yaml
+
 
 RUN iruby register --force

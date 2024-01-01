@@ -5,22 +5,24 @@ ALL_IMAGES = %w[
   nlp
 ].each(&:freeze).freeze
 
-BASE_IMAGES = ALL_IMAGES.map { |name|
+BASE_IMAGES = ALL_IMAGES.map do |name|
   base_image_name, base_image_tag = nil
   IO.foreach("#{name}/Dockerfile") do |line|
     break if base_image_name && base_image_tag
     case line
     when /BASE_IMAGE_TAG=(\h+)/
-      base_image_tag = $1
+      base_image_tag = Regexp.last_match(1)
+    when /BASE_IMAGE_TAG=latest/
+      base_image_tag = 'latest'
     when /\AFROM\s+([^:]+)/
-      base_image_name = $1
+      base_image_name = Regexp.last_match(1)
     end
   end
   [
     name,
-    [base_image_name, base_image_tag].join(":")
+    [base_image_name, base_image_tag].join(':')
   ]
-}.to_h
+end.to_h
 
 DOCKER_FLAGS = ENV['DOCKER_FLAGS']
 
@@ -60,25 +62,22 @@ ALL_IMAGES.each do |image|
   end
 end
 
-
-desc "Build all images"
-task "build-all" do
+desc 'Build all images'
+task 'build-all' do
   ALL_IMAGES.each do |image|
     Rake::Task["build/#{image}"].invoke
   end
 end
 
-
-desc "Tag all images"
-task "tag-all" do
+desc 'Tag all images'
+task 'tag-all' do
   ALL_IMAGES.each do |image|
     Rake::Task["tag/#{image}"].invoke
   end
 end
 
-
-desc "Push all images"
-task "push-all" do
+desc 'Push all images'
+task 'push-all' do
   ALL_IMAGES.each do |image|
     Rake::Task["push/#{image}"].invoke
   end
