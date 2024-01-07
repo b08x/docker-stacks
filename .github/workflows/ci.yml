@@ -20,7 +20,7 @@ jobs:
         image_base_name:
           # - minimal
           - datascience
-          - nlp
+          # - nlp
 
     name: ${{ matrix.image_base_name }}-notebook
     runs-on: ubuntu-latest
