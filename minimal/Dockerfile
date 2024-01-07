@@ -16,43 +16,42 @@ RUN usermod -a -G sudo $USER && usermod -a -G $GROUP_ID $USER
 RUN echo "$USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/99-$USER && chmod 0440 /etc/sudoers.d/99-$USER
 
 # Pre-requisites
-RUN apt-get update && \
-  apt-get install -y -V --no-install-recommends \
-  apt-transport-https \
-  gnupg lsb-release apt-utils locate \
-  ca-certificates \
-  curl \
-  cmake \
-  gcc \
-  git \
-  git-lfs \
-  libczmq-dev \
-  libffi-dev \
-  libgdbm-dev \
-  libgmp-dev \
-  liblapacke-dev \
-  libmysqlclient-dev \
-  libncurses5-dev \
-  libopenblas-dev \
-  libpq-dev \
-  libreadline-dev \
-  libsqlite3-dev \
-  libssl-dev \
-  libxml2-dev \
-  libxslt1-dev \
-  libyaml-dev \
-  libzmq3-dev \
-  neovim \
-  openssl \
-  ruby-psych \
-  software-properties-common \
-  mysql-client \
-  pkg-config \
-  postgresql-client \
-  sqlite3 \
-  tzdata \
-  zlib1g-dev \
-  wget && \
+RUN apt-get update && apt-get install -y -V --no-install-recommends \
+      apt-transport-https \
+      gnupg lsb-release apt-utils locate \
+      ca-certificates \
+      curl \
+      cmake \
+      gcc \
+      git \
+      git-lfs \
+      libczmq-dev \
+      libffi-dev \
+      libgdbm-dev \
+      libgmp-dev \
+      liblapacke-dev \
+      libmysqlclient-dev \
+      libncurses5-dev \
+      libopenblas-dev \
+      libpq-dev \
+      libreadline-dev \
+      libsqlite3-dev \
+      libssl-dev \
+      libxml2-dev \
+      libxslt1-dev \
+      libyaml-dev \
+      libzmq3-dev \
+      neovim \
+      openssl \
+      ruby-psych \
+      software-properties-common \
+      mysql-client \
+      pkg-config \
+      postgresql-client \
+      sqlite3 \
+      tzdata \
+      zlib1g-dev \
+      wget && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy Ruby 3.1.3 from rubylang/ruby

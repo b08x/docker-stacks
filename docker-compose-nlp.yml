@@ -9,6 +9,8 @@ services:
     volumes:
       - $HOME/Public:/home/jovyan/Public:ro
       - ./data/notebooks:/home/jovyan/work
+    env_file:
+      - .env
     environment:
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       PUID: 1000
