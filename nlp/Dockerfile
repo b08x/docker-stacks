@@ -21,7 +21,9 @@ RUN apt update && \
     apt-get autoremove -y && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN gem update --system 3.4.22
+RUN echo "gem: --user-install" >> /home/$USER/.gemrc && \
+    echo "gem: --user-install" >> /etc/gemrc && \
+    echo "gem: --no-user-install --no-document" >> /root/.gemrc
 
 WORKDIR /home/$USER
 
@@ -30,6 +32,8 @@ COPY nlp/Gemfile .
 COPY gems/ferret-0.11.9.0.gem .
 
 RUN chown -R $USER:$GROUP_ID /home/$USER
+
+RUN gem update --system 3.4.22
 
 USER $USER
 
@@ -57,10 +61,7 @@ RUN \
 # NOTE: DO NOT CHANGE the version in the path of gem's bin directory
 ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$HOME/.local/bin:$PATH
 
-
 ENV BUNDLE_PATH $HOME/.local/share/gem
-
-RUN echo "gem: --user-install" >> $HOME/.gemrc
 
 RUN gem install ferret-0.11.9.0.gem && \
     bundle config build.redic --with-cxx="clang++" --with-cflags="-std=c++0x" && \
