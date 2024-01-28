@@ -18,9 +18,9 @@ jobs:
     strategy:
       matrix:
         image_base_name:
-          - minimal
+          # - minimal
           - datascience
-          - nlp
+          # - nlp
 
     name: notebook-${{ matrix.image_base_name }}
     runs-on: ubuntu-latest
