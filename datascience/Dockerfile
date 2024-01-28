@@ -1,5 +1,5 @@
-ARG BASE_IMAGE_TAG=febbe3b7550c
-FROM b08x/minimal-notebook:$BASE_IMAGE_TAG
+ARG BASE_IMAGE_TAG=latest
+FROM b08x/notebook-minimal:$BASE_IMAGE_TAG
 
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 

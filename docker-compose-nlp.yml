@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   nlp-notebook:
-    image: b08x/nlp-notebook:latest
+    image: b08x/notebook-nlp:latest
     build:
       context: .
       dockerfile: nlp/Dockerfile

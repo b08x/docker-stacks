@@ -18,11 +18,11 @@ jobs:
     strategy:
       matrix:
         image_base_name:
-          # - minimal
-          # - datascience
+          - minimal
+          - datascience
           - nlp
 
-    name: ${{ matrix.image_base_name }}-notebook
+    name: notebook-${{ matrix.image_base_name }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -37,7 +37,7 @@ jobs:
       - name: Tag
         run: |
           tag=${GITHUB_SHA:0:12}
-          docker tag b08x/${{ matrix.image_base_name }}-notebook:latest b08x/${{ matrix.image_base_name }}-notebook:${tag}
+          docker tag b08x/notebook-${{ matrix.image_base_name }}:latest b08x/notebook-${{ matrix.image_base_name }}:${tag}
 
       - name: List images
         run: docker images --format '{{.Repository}}:{{.Tag}}\t{{.ID}}'
@@ -52,7 +52,7 @@ jobs:
       - name: Push images to DockerHub
         if: github.ref == 'refs/heads/development'
         run: |
-          docker images --format '{{.Repository}}:{{.Tag}}' | grep b08x/${{ matrix.image_base_name }}-notebook | while read image_name; do
+          docker images --format '{{.Repository}}:{{.Tag}}' | grep b08x/notebook-${{ matrix.image_base_name }} | while read image_name; do
             echo "Pushing ${image_name}"
             docker push ${image_name}
           done
