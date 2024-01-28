@@ -3,6 +3,7 @@ ALL_IMAGES = %w[
   minimal
   datascience
   nlp
+  audio
 ].each(&:freeze).freeze
 
 BASE_IMAGES = ALL_IMAGES.map do |name|

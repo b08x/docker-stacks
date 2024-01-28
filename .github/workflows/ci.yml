@@ -18,9 +18,10 @@ jobs:
     strategy:
       matrix:
         image_base_name:
-          # - minimal
-          # - datascience
+          - minimal
+          - datascience
           - nlp
+          - audio
 
     name: notebook-${{ matrix.image_base_name }}
     runs-on: ubuntu-latest
