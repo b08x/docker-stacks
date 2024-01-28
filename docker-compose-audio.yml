@@ -2,10 +2,10 @@ version: "3.9"
 
 services:
   nlp-notebook:
-    image: b08x/notebook-nlp:latest
+    image: b08x/notebook-audio:latest
     build:
       context: .
-      dockerfile: nlp/Dockerfile
+      dockerfile: audio/Dockerfile
     volumes:
       - $HOME/Public:/home/jovyan/Public:ro
       - $HOME/Public/Workspace:/home/jovyan/Workspace

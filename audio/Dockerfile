@@ -14,6 +14,7 @@ RUN apt update && \
       libpoppler-glib-dev \
       libfftw3-dev \
       libglib2.0-dev \
+      git \
       cmake \
       neovim \
       gnuplot \
@@ -41,6 +42,8 @@ RUN chown -R $USER:$GROUP_ID /home/$USER
 RUN gem update --system 3.5.3
 
 USER $USER
+
+RUN git clone https://github.com/mike-bourgeous/mb-sound.git
 
 #RUN conda update jupyterlab -y && conda install pip -y
 # RUN pip install 'jupyter_ai>=1.0,<2.0'
