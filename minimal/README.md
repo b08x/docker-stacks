@@ -16,7 +16,7 @@ pry
 
 ## Components in this image
 
-- Based on buildpack-deps:xenial
+- Based on jupyter/scipy-notebook
 - Ruby 3.1.3
     - Almost same as docker-library's ruby image
 - Python 3.10.1
@@ -30,12 +30,3 @@ pry
     scikit-learn, scikit-image, sympy, gensim, nltk, cython, statsmodel,
     patsy, cloudpickle, dill, numba, xray, pyarrow, tensorflow, keras,
     chainer, xgboost
-
-## Basic Usage
-
-This image does not run Jupyter Notebook in default.
-The following command runs bash shell on root user.
-
-```
-docker run -p 8888:8888 -v ./.env:/home/joyven/.env b08x/minimal:latest
-```

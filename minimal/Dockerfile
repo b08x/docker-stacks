@@ -17,8 +17,7 @@ RUN echo "$USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/99-$USER && chmod 0440 
 
 # Pre-requisites
 RUN apt-get update && apt-get install -y -V --no-install-recommends \
-      apt-transport-https \
-      gnupg lsb-release apt-utils locate \
+      apt-transport-https gnupg lsb-release apt-utils \
       ca-certificates \
       curl \
       cmake \
@@ -55,7 +54,6 @@ RUN apt-get update && apt-get install -y -V --no-install-recommends \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy Ruby 3.1.3 from rubylang/ruby
-
 COPY --from=rubylang/ruby:3.1.3-focal \
   /usr/local/bin/bundle \
   /usr/local/bin/bundler \
