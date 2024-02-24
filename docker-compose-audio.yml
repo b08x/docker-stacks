@@ -7,8 +7,8 @@ services:
       context: .
       dockerfile: audio/Dockerfile
     volumes:
-      - $HOME/Public:/home/jovyan/Public:ro
-      - $HOME/Public/Workspace:/home/jovyan/Workspace
+      - $XDG_LIBRARY_DIR:/home/jovyan/Library:ro
+      - $XDG_WORKSPACE_DIR:/home/jovyan/Workspace
     env_file:
       - .env
     environment:
@@ -16,6 +16,3 @@ services:
       PGID: 1041
     ports:
       - 8888:8888
-# volumes:
-#   ruby_notebook:
-#     driver: local
