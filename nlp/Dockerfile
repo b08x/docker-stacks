@@ -19,7 +19,7 @@ RUN apt update && \
       exiftool \
       pdftk \
       tesseract \
-      ghostscript
+      ghostscript \
       poppler \
       libreoffice \
       graphviz && \
