@@ -17,6 +17,14 @@ This repository is based on [rubydata/docker-stacks](https://github.com/RubyData
 
 ### NLP Image
 
+Contains gems necessary to build an application working with Large Language Models (LLMs).
+
+Question Answering System: Building a system that can answer questions based on a knowledge base stored in Chroma.
+
+Text Summarization or Generation Tool: Leveraging LLMs to summarize larger pieces of text or generate new content based on prompts.
+
+Intelligent Search: Creating a search interface allowing the LLMs to understand natural language queries and find suitable matches within the knowledge base.
+
 # Building Images
 
 ## Using the Rakefile

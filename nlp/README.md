@@ -2,15 +2,26 @@
 
 ```bash
 
-+--------+               +------------------+              +-----+
-|  ruby  +-------------->|---data science---+------------->| nlp |
-+--------+               +------------------+              +-----+
++------------------+      +--------+      +-----+
+|---data science---+----->|  ruby  +----->| nlp |
++------------------+      +--------+      +-----+
 
 ```
 
-
-
 ---
+
+# Knowledge Management:
+Chroma: This embedding database suggests the intention to store and retrieve information in a way optimized for use by LLMs.
+
+# LLM Integrations:
+Aoororachain: This library specifically for integrating LLMs with Ruby projects aligns seamlessly with the overall theme.
+Cohere and ollama-ai: Including powerful LLMs themselves reinforces this focus.
+
+# Content Transformation:
+beckett: The ability to render Markdown into formats like JSON and HTML5 suggests preparing content to be more easily processed or understood by LLMs.
+
+# Data Handling:
+stream_lines: The capacity to stream files line by line could be useful for efficient processing of large datasets to train or query the LLMs.
 
 ### [aoororachain](https://github.com/mariochavez/aoororachain)
 
@@ -83,77 +94,20 @@ vector_database.from_documents(texts, index: collection_name)
 ```
 </details>
 
+### [networkx 0.4.0](https://rubygems.org/gems/networkx/versions/0.4.0?locale=en)
 
-### [beckett](https://github.com/coreyti/beckett)
-
-A Markdown renderer, using Kramdown, to convert to JSON, HTML5 or a Ruby Hash.
+A Ruby implemenation of the well-known graph library called "networkx".
 
 <details>
 <summary><i>example</i></summary>
 ```ruby
+require 'networkx'
 
-markdown_text = <<-'TEXT'
-# Chain-of-Thought Reasoning Without Prompting
-#llm #rag #retrieval
-
-https://arxiv.org/pdf/2402.10200.pdf
-
-## secondary heading
-
-### a third kind of heading
-
-#### a fourth heading
-
-
-##### a fifth heading
-TEXT
-
-=> "# Chain-of-Thought Reasoning Without Prompting\n#llm #rag #retrieval \n\nhttps://arxiv.org/pdf/2402.10200.pdf\n\n## secondary heading\n\n### a third kind of heading\n\n#### a fourth heading\n\n\n##### a fifth heading\n\n###### a sixth heading\n\n"
-[4] pry(main)> Beckett::Document.new(markdown_text)
-=> #<Beckett::Document:0x000077799b0bf680
- @content=
-  "# Chain-of-Thought Reasoning Without Prompting\n#llm #rag #retrieval \n\nhttps://arxiv.org/pdf/2402.10200.pdf\n\n## secondary heading\n\n### a third kind of heading\n\n#### a fourth heading\n\n\n##### a fifth heading\n\n###### a sixth heading\n\n">
-[5] pry(main)> x = Beckett::Document.new(markdown_text)
-=> #<Beckett::Document:0x000077799b097478
- @content=
-  "# Chain-of-Thought Reasoning Without Prompting\n#llm #rag #retrieval \n\nhttps://arxiv.org/pdf/2402.10200.pdf\n\n## secondary heading\n\n### a third kind of heading\n\n#### a fourth heading\n\n\n##### a fifth heading\n\n###### a sixth heading\n\n">
-[6] pry(main)> x.to_hash
-=> {:root=>
-  {:children=>
-    [{:node_name=>"ARTICLE",
-=> {:root=>
-  {:children=>
-    [{:node_name=>"ARTICLE",
-      :node_type=>1,
-      :attributes=>{"id"=>"chain-of-thought-reasoning-without-prompting"},
-      :children=>
-       [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"chain-of-thought-reasoning-without-prompting"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"Chain-of-Thought Reasoning Without Prompting"}]},
-        {:node_name=>:P, :node_type=>1, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"#llm #rag #retrieval"}]},
-        {:node_name=>:P, :node_type=>1, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"https://arxiv.org/pdf/2402.10200.pdf"}]},
-        {:node_name=>"SECTION",
-         :node_type=>1,
-         :attributes=>{"id"=>"secondary-heading"},
-         :children=>
-          [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"secondary-heading"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"secondary heading"}]},
-           {:node_name=>"SECTION",
-            :node_type=>1,
-            :attributes=>{"id"=>"a-third-kind-of-heading"},
-            :children=>
-             [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"a-third-kind-of-heading"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"a third kind of heading"}]},
-              {:node_name=>"SECTION",
-               :node_type=>1,
-               :attributes=>{"id"=>"a-fourth-heading"},
-               :children=>
-                [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"a-fourth-heading"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"a fourth heading"}]},
-                 {:node_name=>"SECTION",
-                  :node_type=>1,
-                  :attributes=>{"id"=>"a-fifth-heading"},
-                  :children=>
-                   [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"a-fifth-heading"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"a fifth heading"}]},
-                    {:node_name=>"SECTION",
+g = NetworkX::Graph.new
+g.add_edge('start', 'stop')
 ```
-
 </details>
+
 
 ### [decisiontree 0.5.0](https://github.com/igrigorik/decisiontree)
 
@@ -342,11 +296,11 @@ puts tester.source # => /^(http)(s)?(\:\/\/)(www\.)?([^\ ]*)$/
 </details>
 
 ### [engtagger 0.4.0](https://github.com/yohasebe/engtagger)
-<details>
-<summary><i>example</i></summary>
-
 
 A Ruby port of Perl Lingua::EN::Tagger, a probability based, corpus-trained tagger that assigns POS tags to English text based on a lookup dictionary and a set of probability values.
+
+<details>
+<summary><i>example</i></summary>
 
 ```ruby
 require 'engtagger'
@@ -402,11 +356,11 @@ nps = tgr.get_noun_phrases(tagged)
 
 
 ### [jongleur 1.1.1](https://gitlab.com/RedFred7/Jongleur)
-<details>
-<summary><i>example</i></summary>
-
 
 Launches, schedules and manages tasks represented in a DAG, as multiple processes
+
+<details>
+<summary><i>example</i></summary>
 
 ![sample ml pipeline](https://miro.medium.com/v2/resize:fit:640/format:webp/1*Jz2UVqrVYj1hIwHxOpw2VQ.png)
 
@@ -420,11 +374,11 @@ Launches, schedules and manages tasks represented in a DAG, as multiple processe
 </details>
 
 ### [composable_operations 0.10.1](http://github.com/t6d/composable_operations)
-<details>
-<summary><i>example</i></summary>
-
 
 Composable Operations is a tool set for creating operations and assembling multiple of these operations in operation pipelines.
+
+<details>
+<summary><i>example</i></summary>
 
 ```ruby
 class DateExtractor < ComposableOperations::Operation
@@ -440,11 +394,11 @@ end
 </details>
 
 ### [ferret 0.11.8.7](https://github.com/dbalmain/ferret)
-<details>
-<summary><i>example</i></summary>
-
 
 Ferret is a super fast, highly configurable search library.
+
+<details>
+<summary><i>example</i></summary>
 
 ```ruby
 require 'rubygems'
@@ -473,18 +427,16 @@ puts index.search('id:1').to_s(:text)
 <details>
 <summary><i>example</i></summary>
 
-
-
 ```ruby
 ```
 </details>
 
 ### [tokenizers 0.4.1](https://github.com/ankane/tokenizers-ruby)
-<details>
-<summary><i>example</i></summary>
-
 
 Fast state-of-the-art tokenizers for Ruby
+
+<details>
+<summary><i>example</i></summary>
 
 ```ruby
 tokenizer = Tokenizers.from_pretrained("bert-base-cased")
@@ -495,12 +447,11 @@ tokenizer = Tokenizers.from_pretrained("bert-base-cased")
 
 
 ### [eqn 1.6.5](https://github.com/schneidmaster/eqn)
-<details>
-<summary><i>example</i></summary>
-
 
 A gem to evaluate mathematical equations. Includes support for variables and functions.
 
+<details>
+<summary><i>example</i></summary>
 ```ruby
 Eqn::Parser.parse('1 + 1')
 # => <syntax tree is printed>
@@ -508,23 +459,22 @@ Eqn::Parser.parse('1 + 1')
 </details>
 
 ### [google_search_results 0.0.1](https://github.com/serpapi/google-search-results-ruby)
-<details>
-<summary><i>example</i></summary>
-
 
 Get Google Search Results via SERP API. Hash, JSON, and HTML outputs supported.
 
+<details>
+<summary><i>example</i></summary>
 ```ruby
 # https://github.com/serpapi/google-search-results-ruby#supported-search-engine
 ```
 </details>
 
 ### [lemmatizer 0.2.2](http://github.com/yohasebe/lemmatizer)
-<details>
-<summary><i>example</i></summary>
-
 
 Lemmatizer for text in English. Inspired by Python's nltk.corpus.reader.wordnet.morphy package.
+
+<details>
+<summary><i>example</i></summary>
 
 ```ruby
 require "lemmatizer"
@@ -544,11 +494,11 @@ p lem.lemma("slow")            # => "slow"
 </details>
 
 ### [llm_memory 0.1.14](https://github.com/shohey1226/llm_memory)
-<details>
-<summary><i>example</i></summary>
-
 
 LLM Memory is a Ruby gem designed to provide large language models (LLMs) like ChatGPT with memory using in-context learning. This enables better integration with systems such as Rails and web services while providing a more user-friendly and abstract interface based on brain terms.
+
+<details>
+<summary><i>example</i></summary>
 
 ![](https://user-images.githubusercontent.com/1880965/239105431-b77d0efa-3fec-4549-b98a-eae510de5c3d.png)
 
@@ -601,58 +551,144 @@ message2 = broca.respond(query_str: query_str2, related_docs: related_docs)
 </details>
 
 ### [ohm 3.1.1](http://soveran.github.io/ohm/)
-<details>
-<summary><i>example</i></summary>
-
 
 Ohm is a library that allows to store an object in Redis, a persistent key-value database. It has very good performance.
 
-
+<details>
+<summary><i>example</i></summary>
 ```ruby
 ```
 </details>
 
 ### [ohm-contrib 3.0.0](http://github.com/cyx/ohm-contrib)
-<details>
-<summary><i>example</i></summary>
-
 
 Includes a couple of core functions such as callbacks, timestamping, typecasting and lots of generic validation routines.
 
+<details>
+<summary><i>example</i></summary>
 ```ruby
 ```
 </details>
 
-### [pdf_paradise 0.2.3](https://rubygems.org/gems/pdf_paradise)
+### [hashie](https://github.com/hashie/hashie)
+
+Hashie is a growing collection of tools that extend Hashes and make them more useful.
+
 <details>
 <summary><i>example</i></summary>
+IgnoreUndeclared
 
+This extension can be mixed in to silently ignore undeclared properties on initialization instead of raising an error. This is useful when using a Trash to capture a subset of a larger hash
+
+```ruby
+class Person < Trash
+  include Hashie::Extensions::IgnoreUndeclared
+  property :first_name
+  property :last_name
+end
+
+user_data = {
+  first_name: 'Freddy',
+  last_name: 'Nostrils',
+  email: 'freddy@example.com'
+}
+
+p = Person.new(user_data) # 'email' is silently ignored
+
+p.first_name # => 'Freddy'
+p.last_name  # => 'Nostrils'
+p.email      # => NoMethodError
+```
+</details>
+
+
+### [pdf_paradise 0.2.3](https://rubygems.org/gems/pdf_paradise)
 
 This gem is called pdf_paradise. It attempts to be a swiss army knife, a wrapper, over pdf-related functionality in general, by tapping into external projects, such as prawn, qpdf and so forth. For more information, please have a look at the documentation of the project on the homepage of this gem, at: https://www.rubydoc.info/gems/pdf_paradise/
 
+<details>
+<summary><i>example</i></summary>
 ```ruby
 ```
 </details>
 
 ### [beckett 0.1.0](https://github.com/coreyti/beckett)
-<details>
-<summary><i>example</i></summary>
-
 
 A Markdown renderer, using Kramdown, to convert to JSON, HTML5 or a Ruby Hash.
 
+<details>
+<summary><i>example</i></summary>
 ```ruby
+
+markdown_text = <<-'TEXT'
+# Chain-of-Thought Reasoning Without Prompting
+#llm #rag #retrieval
+
+https://arxiv.org/pdf/2402.10200.pdf
+
+## secondary heading
+
+### a third kind of heading
+
+#### a fourth heading
+
+
+##### a fifth heading
+TEXT
+
+=> "# Chain-of-Thought Reasoning Without Prompting\n#llm #rag #retrieval \n\nhttps://arxiv.org/pdf/2402.10200.pdf\n\n## secondary heading\n\n### a third kind of heading\n\n#### a fourth heading\n\n\n##### a fifth heading\n\n###### a sixth heading\n\n"
+[4] pry(main)> Beckett::Document.new(markdown_text)
+=> #<Beckett::Document:0x000077799b0bf680
+ @content=
+  "# Chain-of-Thought Reasoning Without Prompting\n#llm #rag #retrieval \n\nhttps://arxiv.org/pdf/2402.10200.pdf\n\n## secondary heading\n\n### a third kind of heading\n\n#### a fourth heading\n\n\n##### a fifth heading\n\n###### a sixth heading\n\n">
+[5] pry(main)> x = Beckett::Document.new(markdown_text)
+=> #<Beckett::Document:0x000077799b097478
+ @content=
+  "# Chain-of-Thought Reasoning Without Prompting\n#llm #rag #retrieval \n\nhttps://arxiv.org/pdf/2402.10200.pdf\n\n## secondary heading\n\n### a third kind of heading\n\n#### a fourth heading\n\n\n##### a fifth heading\n\n###### a sixth heading\n\n">
+[6] pry(main)> x.to_hash
+=> {:root=>
+  {:children=>
+    [{:node_name=>"ARTICLE",
+=> {:root=>
+  {:children=>
+    [{:node_name=>"ARTICLE",
+      :node_type=>1,
+      :attributes=>{"id"=>"chain-of-thought-reasoning-without-prompting"},
+      :children=>
+       [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"chain-of-thought-reasoning-without-prompting"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"Chain-of-Thought Reasoning Without Prompting"}]},
+        {:node_name=>:P, :node_type=>1, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"#llm #rag #retrieval"}]},
+        {:node_name=>:P, :node_type=>1, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"https://arxiv.org/pdf/2402.10200.pdf"}]},
+        {:node_name=>"SECTION",
+         :node_type=>1,
+         :attributes=>{"id"=>"secondary-heading"},
+         :children=>
+          [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"secondary-heading"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"secondary heading"}]},
+           {:node_name=>"SECTION",
+            :node_type=>1,
+            :attributes=>{"id"=>"a-third-kind-of-heading"},
+            :children=>
+             [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"a-third-kind-of-heading"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"a third kind of heading"}]},
+              {:node_name=>"SECTION",
+               :node_type=>1,
+               :attributes=>{"id"=>"a-fourth-heading"},
+               :children=>
+                [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"a-fourth-heading"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"a fourth heading"}]},
+                 {:node_name=>"SECTION",
+                  :node_type=>1,
+                  :attributes=>{"id"=>"a-fifth-heading"},
+                  :children=>
+                   [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"a-fifth-heading"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"a fifth heading"}]},
+                    {:node_name=>"SECTION",
 ```
+
 </details>
 
 ### [pragmatic_segmenter](https://github.com/diasks2/pragmatic_segmenter)
-<details>
-<summary><i>example</i></summary>
-
 
 Pragmatic Segmenter is a sentence segmentation tool for Ruby. It allows you to split a text into an array of sentences. This gem provides 2 main benefits over other segmentation gems - 1) It works well even with ill-formatted text 2) It works for multiple languages
 
-
+<details>
+<summary><i>example</i></summary>
 ```ruby
 text = "Hello world. My name is Mr. Smith. I work for the U.S. Government and I live in the U.S. I live in New York."
 ps = PragmaticSegmenter::Segmenter.new(text: text)
@@ -685,14 +721,12 @@ ps.clean
 ```
 </details>
 
-
 ### [pragmatic_tokenizer 3.2.0](https://github.com/diasks2/pragmatic_tokenizer)
-<details>
-<summary><i>example</i></summary>
-
 
 A multilingual tokenizer to split a string into tokens.
 
+<details>
+<summary><i>example</i></summary>
 ```ruby
 text = "\"I said, 'what're you? Crazy?'\" said Sandowsky. \"I can't afford to do that.\""
 
@@ -726,11 +760,11 @@ options = {
 </details>
 
 ### [ruby-spacy 0.2.2](https://github.com/yohasebe/ruby-spacy)
-<details>
-<summary><i>example</i></summary>
-
 
 ruby-spacy is a wrapper module for using spaCy from the Ruby programming language via PyCall. This module aims to make it easy and natural for Ruby programmers to use spaCy. This module covers the areas of spaCy functionality for using many varieties of its language models, not for building ones.
+
+<details>
+<summary><i>example</i></summary>
 
 |    | Functionality                                      |
 |:---|:---------------------------------------------------|
@@ -770,12 +804,11 @@ puts table
 </details>
 
 ### [tomoto 0.3.3](https://github.com/ankane/tomoto-ruby)
-<details>
-<summary><i>example</i></summary>
-
 
 High performance topic modeling for Ruby
 
+<details>
+<summary><i>example</i></summary>
 ```ruby
 model = Tomoto::LDA.new(k: 2)
 model.add_doc(["tokens", "from", "document", "one"])
@@ -788,12 +821,10 @@ model.summary
 
 ### [wordnet 1.2.0](https://github.com/ged/ruby-wordnet)
 
-<details>
-<summary><i>example</i></summary>
-
-
 This library is a Ruby interface to WordNet®. WordNet® is an online lexical reference system whose design is inspired by current psycholinguistic theories of human lexical memory. English nouns, verbs, adjectives and adverbs are organized into synonym sets, each representing one underlying lexical concept. Different relations link the synonym sets.
 
+<details>
+<summary><i>example</i></summary>
 ```ruby
 #!/usr/bin/env ruby
 
