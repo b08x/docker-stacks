@@ -17,6 +17,11 @@ RUN apt update && \
       neovim \
       gnuplot \
       exiftool \
+      pdftk \
+      tesseract \
+      ghostscript
+      poppler \
+      libreoffice \
       graphviz && \
     apt-get autoremove -y && \
     apt-get clean && rm -rf /var/lib/apt/lists/*

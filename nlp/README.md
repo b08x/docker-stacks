@@ -23,6 +23,148 @@ beckett: The ability to render Markdown into formats like JSON and HTML5 suggest
 # Data Handling:
 stream_lines: The capacity to stream files line by line could be useful for efficient processing of large datasets to train or query the LLMs.
 
+### [socrates](https://rubygems.org/gems/socrates/versions/0.1.26?locale=en)
+
+Socrates is a micro-framework for building stateful conversational interfaces. It provides straight-forward state management, a clear pattern for modeling the states and conversational flow (transitions), and some helpers.
+
+<details>
+<summary><i>example</i></summary>
+```ruby
+class GetStarted
+  include Socrates::Core::State
+
+  def listen(message)
+    case message.downcase
+      when "help"
+        transition_to :help
+      when "age"
+        transition_to :ask_for_name
+      else
+        transition_to :no_comprende
+    end
+  end
+end
+
+class Help
+  include Socrates::Core::State
+
+  def ask
+    respond message: <<~MSG
+      Thanks for asking! I can do these things for you...
+
+        • `age` - Calculate your age from your birth date.
+        • `help` - Tell you what I can do for you.
+
+      So, what shall it be?
+    MSG
+    transition_to :get_started, action: :listen
+  end
+end
+
+class NoComprende
+  include Socrates::Core::State
+
+  def ask
+    respond message: "Whoops, I don't know what you mean by that. Try `help` to see my commands."
+    transition_to :get_started
+  end
+end
+
+class AskForName
+  include Socrates::Core::State
+
+  def ask
+    respond message: "First things first, what's your name?"
+  end
+
+  def listen(message)
+    # Transition to the next step while persisting the name for future retrieval.
+    transition_to :ask_for_birth_date, data: { name: message }
+  end
+end
+
+class AskForBirthDate
+  include Socrates::Core::State
+
+  def ask
+    respond message: "Hi #{first_name}! What's your birth date (e.g. MM/DD/YYYY)?"
+  end
+
+  def listen(message)
+    begin
+      birth_date = Date.strptime(message, "%m/%d/%Y")
+    rescue ArgumentError
+      respond message: "Whoops, I didn't understand that. What's your birth date (e.g. MM/DD/YYYY)?"
+      repeat_action
+      return
+    end
+    # Transition to the next step while persisting the birth date for future retrieval.
+    transition_to :calculate_age, data: { birth_date: birth_date }
+  end
+
+  private
+
+  def first_name
+    @data.get(:name).split.first
+  end
+end
+
+class CalculateAge
+  include Socrates::Core::State
+
+  def ask
+    respond message: "Got it #{first_name}! So that makes you #{calculate_age} years old."
+    end_conversation
+  end
+
+  private
+
+  def first_name
+    @data.get(:name).split.first
+  end
+
+  def birth_date
+    @data.get(:birth_date)
+  end
+
+  def calculate_age
+    ((Date.today.to_time - birth_date.to_time) / 1.year).floor
+  end
+end
+```
+</details>
+
+
+### [sad_panda](https://github.com/mattThousand/sad_panda)
+
+sad_panda is a gem featuring tools for sentiment analysis of natural language: positivity/negativity and emotion classification.
+
+Emotion Range: "anger", "disgust", "joy", "surprise", "fear", "sadness"
+
+Polarity Range: 0 to 10
+
+<details>
+<summary><i>example</i></summary>
+
+```ruby
+require 'sad_panda'
+
+SadPanda.emotion('my lobster collection makes me happy!')
+=> :joy
+
+SadPanda.polarity('I love cactuses!')
+=> 10.0
+
+sad_panda = SadPanda::Emotion.new('my lobster collection makes me happy!')
+sad_panda.call
+sad_pands.scores = {:anger=>0, :disgust=>0, :joy=>1, :surprise=>0, :fear=>0, :sadness=>0, :ambiguous=>0}
+
+sad_panda.joy => 1
+sad_panda.fear => 0
+# same for all the other emotions
+```
+</details>
+
 ### [aoororachain](https://github.com/mariochavez/aoororachain)
 
 Aoororachain is Ruby chain tool to work with LLMs.
@@ -601,6 +743,18 @@ p.email      # => NoMethodError
 ```
 </details>
 
+### [docsplit](https://documentcloud.github.io/docsplit/)
+
+A command-line utility and Ruby library for splitting apart documents into their component parts: searchable UTF-8 plain text via OCR if necessary, page images or thumbnails in any format, PDFs, single pages, and document metadata (title, author, number of pages...)
+
+<details>
+<summary><i>example</i></summary>
+```ruby
+Docsplit.extract_pages('doc.pdf', :pages => 1..10)
+Docsplit.extract_text(docs, :ocr => false, :output => 'storage/text')
+
+```
+</details>
 
 ### [pdf_paradise 0.2.3](https://rubygems.org/gems/pdf_paradise)
 
@@ -681,6 +835,21 @@ TEXT
                     {:node_name=>"SECTION",
 ```
 
+</details>
+
+### [lingua](https://github.com/dbalatero/lingua)
+
+Provides sentence splitting, syllable, and text-quality algorithms.
+
+<details>
+<summary><i>example</i></summary>
+```ruby
+
+x = Lingua::EN::Syllable.syllables("So the query is classifying, given the set of topics available. So the document is classified as audio processing. All of the chunks in the post-quist database table related to audio processing. Yeah, something like that.")
+
+[16] pry(main)> x
+=> 65
+```
 </details>
 
 ### [pragmatic_segmenter](https://github.com/diasks2/pragmatic_segmenter)
@@ -800,6 +969,24 @@ puts table
 | 1983年     | 4     | 9   | DATE    |
 | ファミコン | 10    | 15  | PRODUCT |
 | 14,800円   | 16    | 23  | MONEY   |
+```
+</details>
+
+### [epitome](https://github.com/McFreely/epitome)
+
+A small gem to make your text shorter. It's an implementation of the Lexrank algorithm. You can use it on a single text, but lexrank is designed to be used on a collection of texts. But it works the same anyway.
+
+<details>
+<summary><i>example</i></summary>
+```ruby
+document_one = Epitome::Document.new("The cat likes catnip. He rolls and rolls")
+document_two = Epitome::Document.new("The cat plays in front of the dog. The dog is placid.")
+
+document_collection = [document_one, document_two]
+@corpus = Epitome::Corpus.new(document_collection)
+
+@corpus.summary(length=3)
+@corpus.summary(5, 0.2)
 ```
 </details>
 
