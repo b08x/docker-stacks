@@ -5,13 +5,155 @@
 +--------+               +------------------+              +-----+
 |  ruby  +-------------->|---data science---+------------->| nlp |
 +--------+               +------------------+              +-----+
-  
+
 ```
 
 
 
 ---
 
+### [aoororachain](https://github.com/mariochavez/aoororachain)
+
+Aoororachain is Ruby chain tool to work with LLMs.
+
+<details>
+<summary><i>example</i></summary>
+
+```ruby
+require "aoororachain"
+
+# Setup logger.
+Aoororachain.logger = Logger.new($stdout)
+Aoororachain.log_level = Aoororachain::LEVEL_DEBUG
+
+chroma_host = "http://localhost:8000"
+collection_name = "ruby-documentation"
+
+# You can define a custom Parser to clean data and maybe extract metadata.
+# Here is the code of RubyDocParser that does exactly that.
+class RubyDocParser
+  def self.parse(text)
+    name_match = text.match(/Name (\w+)/)
+    constant_match = text.match(/Constant (\w+)/)
+
+    object_match = text.match(/Object (\w+)/)
+    method_match = text.match(/Method ([\w\[\]\+\=\-\*\%\/]+)/)
+
+    metadata = {}
+    metadata[:name] = name_match[1] if name_match
+    metadata[:constant] = constant_match[1] if constant_match
+    metadata[:object] = object_match[1] if object_match
+    metadata[:method] = method_match[1] if method_match
+    metadata[:lang] = :ruby
+    metadata[:version] = "3.2"
+
+    text.gsub!(/\s+/, " ").strip!
+    [text, metadata]
+  end
+end
+
+# A DirectoryLoader points to a path and sets the glob for the files you want to load. 
+# A loader is also specified. FileLoader just opens and reads the file content. 
+# The RubyDocParser is set as well. This is optional in case you data is very nice and needs no pre-processing.
+directory_loader = Aoororachain::Loaders::DirectoryLoader.new(path: "./ruby-docs", glob: "**/*.txt", loader: Aoororachain::Loaders::FileLoader, parser: RubyDocParser)
+files = directory_loader.load
+
+# With your data clean and ready, now it is time to chunk it. The chunk size depends of the context size of the LLMs that you want to use.
+# 512 is a good number to start, don't go lower than that. An overlap can also be specified.
+text_splitter = Aoororachain::RecursiveTextSplitter.new(size: 512, overlap: 0)
+
+texts = []
+files.each do |file|
+  texts.concat(text_splitter.split_documents(file))
+end
+
+# The final step is to create and store the embeddings.
+# First, select an embedding model
+model = Aoororachain::Embeddings::LocalPythonEmbedding::MODEL_INSTRUCTOR_L
+# Create an instance of the embedder. device is optional. Possible options are:
+# - cuda. If you have an external GPU
+# - mps. If you have an Apple Sillicon chip (M1 to M2).
+# - cpu or empty. It will use the CPU by default.
+embedder = Aoororachain::Embeddings::LocalPythonEmbedding.new(model:, device: "mps")
+# Configure your Vector database.
+vector_database = Aoororachain::VectorStores::Chroma.new(embedder: embedder, options: {host: chroma_host})
+
+# Embbed your files. This can take a few minutes up to hours, depending on the size of your documents and the model used.
+vector_database.from_documents(texts, index: collection_name)
+```
+</details>
+
+
+### [beckett](https://github.com/coreyti/beckett)
+
+A Markdown renderer, using Kramdown, to convert to JSON, HTML5 or a Ruby Hash.
+
+<details>
+<summary><i>example</i></summary>
+```ruby
+
+markdown_text = <<-'TEXT'
+# Chain-of-Thought Reasoning Without Prompting
+#llm #rag #retrieval
+
+https://arxiv.org/pdf/2402.10200.pdf
+
+## secondary heading
+
+### a third kind of heading
+
+#### a fourth heading
+
+
+##### a fifth heading
+TEXT
+
+=> "# Chain-of-Thought Reasoning Without Prompting\n#llm #rag #retrieval \n\nhttps://arxiv.org/pdf/2402.10200.pdf\n\n## secondary heading\n\n### a third kind of heading\n\n#### a fourth heading\n\n\n##### a fifth heading\n\n###### a sixth heading\n\n"
+[4] pry(main)> Beckett::Document.new(markdown_text)
+=> #<Beckett::Document:0x000077799b0bf680
+ @content=
+  "# Chain-of-Thought Reasoning Without Prompting\n#llm #rag #retrieval \n\nhttps://arxiv.org/pdf/2402.10200.pdf\n\n## secondary heading\n\n### a third kind of heading\n\n#### a fourth heading\n\n\n##### a fifth heading\n\n###### a sixth heading\n\n">
+[5] pry(main)> x = Beckett::Document.new(markdown_text)
+=> #<Beckett::Document:0x000077799b097478
+ @content=
+  "# Chain-of-Thought Reasoning Without Prompting\n#llm #rag #retrieval \n\nhttps://arxiv.org/pdf/2402.10200.pdf\n\n## secondary heading\n\n### a third kind of heading\n\n#### a fourth heading\n\n\n##### a fifth heading\n\n###### a sixth heading\n\n">
+[6] pry(main)> x.to_hash
+=> {:root=>
+  {:children=>
+    [{:node_name=>"ARTICLE",
+=> {:root=>
+  {:children=>
+    [{:node_name=>"ARTICLE",
+      :node_type=>1,
+      :attributes=>{"id"=>"chain-of-thought-reasoning-without-prompting"},
+      :children=>
+       [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"chain-of-thought-reasoning-without-prompting"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"Chain-of-Thought Reasoning Without Prompting"}]},
+        {:node_name=>:P, :node_type=>1, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"#llm #rag #retrieval"}]},
+        {:node_name=>:P, :node_type=>1, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"https://arxiv.org/pdf/2402.10200.pdf"}]},
+        {:node_name=>"SECTION",
+         :node_type=>1,
+         :attributes=>{"id"=>"secondary-heading"},
+         :children=>
+          [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"secondary-heading"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"secondary heading"}]},
+           {:node_name=>"SECTION",
+            :node_type=>1,
+            :attributes=>{"id"=>"a-third-kind-of-heading"},
+            :children=>
+             [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"a-third-kind-of-heading"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"a third kind of heading"}]},
+              {:node_name=>"SECTION",
+               :node_type=>1,
+               :attributes=>{"id"=>"a-fourth-heading"},
+               :children=>
+                [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"a-fourth-heading"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"a fourth heading"}]},
+                 {:node_name=>"SECTION",
+                  :node_type=>1,
+                  :attributes=>{"id"=>"a-fifth-heading"},
+                  :children=>
+                   [{:node_name=>"HEADER", :node_type=>1, :attributes=>{"id"=>"a-fifth-heading"}, :children=>[{:node_name=>"#text", :node_type=>3, :node_text=>"a fifth heading"}]},
+                    {:node_name=>"SECTION",
+```
+
+</details>
 
 ### [decisiontree 0.5.0](https://github.com/igrigorik/decisiontree)
 
@@ -65,6 +207,30 @@ decision = dec_tree.predict(test)
 puts "Predicted: #{decision} ... True decision: #{test.last}"
 
 # => Predicted: angry ... True decision: angry
+```
+</details>
+
+
+### [stream_lines 0.4.1](https://rubygems.org/gems/stream_lines)
+
+An API for streaming files from remote locations one line at a time.
+
+<details>
+<summary><i>example</i></summary>
+```ruby
+url = 'https://my.remote.file/file.jsonl'
+stream = StreamLines::Reading::JSONLines.new(url)
+
+stream.each do |row|
+  # each row will be an Hash
+end
+
+# Supports all Ruby JSON::parse options
+stream = StreamLines::Reading::JSONLines.new(url, symbolize_names: true)
+
+stream.each do |row|
+  # each row will be a Hash
+end
 ```
 </details>
 
@@ -664,5 +830,35 @@ end
 ```
 </details>
 
-###
+### [chroma-db](https://github.com/mariochavez/chroma)
 
+Chroma is the open-source embedding database. Chroma makes it easy to build LLM apps by making knowledge, facts, and skills pluggable for LLMs.
+
+<details>
+<summary><i>example</i></summary>
+```ruby
+require "logger"
+
+# Requiere Chroma Ruby client.
+require "chroma-db"
+
+# Configure Chroma's host. Here you can specify your own host.
+Chroma.connect_host = "http://localhost:8000"
+Chroma.logger = Logger.new($stdout)
+Chroma.log_level = Chroma::LEVEL_ERROR
+
+# Check current Chrome server version
+version = Chroma::Resources::Database.version
+puts version
+
+# Create a new collection
+collection = Chroma::Resources::Collection.create(collection_name, {lang: "ruby", gem: "chroma-db"})
+
+# Add embeddings
+embeddings = [
+  Chroma::Resources::Embedding.new(id: "1", embedding: [1.3, 2.6, 3.1], metadata: {client: "chroma-rb"}, document: "ruby"),
+  Chroma::Resources::Embedding.new(id: "2", embedding: [3.7, 2.8, 0.9], metadata: {client: "chroma-rb"}, document: "rails")
+]
+collection.add(embeddings)
+```
+</details>
