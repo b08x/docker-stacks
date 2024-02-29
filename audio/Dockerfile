@@ -67,7 +67,8 @@ ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$HOME/.local/bin:$PATH
 
 ENV BUNDLE_PATH $HOME/.local/share/gem
 
-RUN wget https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-2.1.2%2Bcpu.zip && unzip libtorch-cxx11-abi-shared-with-deps-2.1.2+cpu.zip
+RUN wget https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-2.1.2%2Bcpu.zip && \
+    unzip libtorch-cxx11-abi-shared-with-deps-2.1.2+cpu.zip
 
 RUN gem install ferret-0.11.9.0.gem && \
     bundle config build.redic --with-cxx="clang++" --with-cflags="-std=c++0x" && \

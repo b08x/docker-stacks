@@ -7,7 +7,7 @@ USER root
 
 ENV USER jovyan
 
-RUN apt update && \
+RUN apt update -qq && \
     apt install -y -V --no-install-recommends  \
       libcairo2-dev \
       libczmq-dev \
@@ -18,9 +18,9 @@ RUN apt update && \
       gnuplot \
       exiftool \
       pdftk \
-      tesseract \
+      tesseract-ocr \
       ghostscript \
-      poppler \
+      poppler-utils \
       libreoffice \
       graphviz && \
     apt-get autoremove -y && \
@@ -47,7 +47,8 @@ RUN \
     python3 -m spacy download en_core_web_lg && \
     pip --no-cache-dir install prompttools && \
     pip install --no-cache-dir -U pip wheel setuptools && \
-    pip install --no-cache-dir torch==2.1.2+cpu torchvision==0.16.2+cpu -f https://download.pytorch.org/whl/torch_stable.html && \
+    pip install --no-cache-dir tensorflow torch==2.1.2+cpu torchaudio torchvision==0.16.2+cpu -f https://download.pytorch.org/whl/torch_stable.html && \
+    pip install --no-cache-dir prompttools && \
     pip install --no-cache-dir txtai${COMPONENTS} && \
     python -c "import sys, importlib.util as util; 1 if util.find_spec('nltk') else sys.exit(); import nltk; nltk.download('punkt')"
 
