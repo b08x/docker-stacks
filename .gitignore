@@ -1,3 +1,4 @@
 data/
 .env
 .tool-versions
+Gemfile.lock
