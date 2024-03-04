@@ -19,8 +19,8 @@ jobs:
       matrix:
         image_base_name:
           # - minimal
-          - datascience
-          # - nlp
+          # - datascience
+          - nlp
           # - audio
 
     name: notebook-${{ matrix.image_base_name }}
