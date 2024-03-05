@@ -39,7 +39,7 @@ COPY gems/ferret-0.11.9.0.gem .
 
 RUN chown -R $USER:$GROUP_ID /home/$USER
 
-RUN gem update --system 3.5.3
+RUN gem update --system 3.5.5
 
 USER $USER
 

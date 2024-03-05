@@ -2,6 +2,7 @@ OWNER = 'b08x'.freeze
 ALL_IMAGES = %w[
   minimal
   datascience
+  llamaindex
   nlp
   audio
 ].each(&:freeze).freeze
