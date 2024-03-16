@@ -79,7 +79,7 @@ gem "nmatrix", git: "https://github.com/b08x/nmatrix.git", branch: "development"
 gem "nmatrix-lapacke", git: "https://github.com/b08x/nmatrix.git", branch: "development"
 gem "nmatrix-fftw", git: "https://github.com/b08x/nmatrix.git", branch: "development"
 
-gem 'torch-rb'
+gem 'torch-rb', '0.14.1'
 gem 'torchaudio'
 gem 'matplotlib', '>= 1.2.0'
 gem 'gnuplot'

@@ -1,5 +1,5 @@
 ARG BASE_IMAGE_TAG=latest
-FROM b08x/notebook-minimal:$BASE_IMAGE_TAG
+FROM b08x/notebook-datascience:$BASE_IMAGE_TAG
 
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 
@@ -48,8 +48,6 @@ RUN git clone https://github.com/mike-bourgeous/mb-sound.git
 #RUN conda update jupyterlab -y && conda install pip -y
 # RUN pip install 'jupyter_ai>=1.0,<2.0'
 
-# List of txtai components to install
-ARG COMPONENTS=[all]
 #
 # # Locale environment variables
 ENV LC_ALL=C.UTF-8
@@ -57,9 +55,7 @@ ENV LANG=C.UTF-8
 #
 RUN \
     pip install --no-cache-dir -U pip wheel setuptools && \
-    pip install --no-cache-dir torch==2.1.2+cpu torchvision==0.16.2+cpu torchaudio -f https://download.pytorch.org/whl/torch_stable.html && \
-    pip install --no-cache-dir txtai${COMPONENTS} && \
-    python -c "import sys, importlib.util as util; 1 if util.find_spec('nltk') else sys.exit(); import nltk; nltk.download('punkt')"
+    pip install --no-cache-dir torch==2.1.2+cpu torchvision==0.16.2+cpu torchaudio -f https://download.pytorch.org/whl/torch_stable.html
 
 
 # NOTE: DO NOT CHANGE the version in the path of gem's bin directory

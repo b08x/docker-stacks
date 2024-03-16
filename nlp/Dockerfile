@@ -1,11 +1,9 @@
 ARG BASE_IMAGE_TAG=latest
-FROM b08x/notebook-datascience:$BASE_IMAGE_TAG
+FROM b08x/notebook-llamaindex:$BASE_IMAGE_TAG
 
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 
 USER root
-
-ENV USER jovyan
 
 RUN apt update -qq && \
     apt install -y -V --no-install-recommends  \
@@ -26,31 +24,15 @@ RUN apt update -qq && \
     apt-get autoremove -y && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN echo "gem: --user-install" >> /home/$USER/.gemrc && \
+RUN echo "gem: --user-install" >> /home/$NB_USER/.gemrc && \
     echo "gem: --user-install" >> /etc/gemrc && \
     echo "gem: --no-user-install --no-document" >> /root/.gemrc && \
-    gem update --system 3.5.5 && chown -R $USER:$GROUP_ID /home/$USER
+    gem update --system 3.5.5 && chown -R $NB_USER:$GROUP_ID /home/$NB_USER
 
-USER $USER
-WORKDIR /home/$USER
-
-# List of txtai components to install
-ARG COMPONENTS=[all]
+USER $NB_USER
+WORKDIR /home/$NB_USER
 # Locale environment variables
 ENV LC_ALL=C.UTF-8
-ENV LANG=C.UTF-8
-#RUN conda update jupyterlab -y && conda install pip -y
-# RUN pip install 'jupyter_ai>=1.0,<2.0'
-RUN \
-    pip --no-cache-dir install spacy && \
-    python3 -m spacy download en_core_web_sm && \
-    python3 -m spacy download en_core_web_lg && \
-    pip --no-cache-dir install prompttools && \
-    pip install --no-cache-dir -U pip wheel setuptools && \
-    pip install --no-cache-dir tensorflow torch==2.1.2+cpu torchaudio torchvision==0.16.2+cpu -f https://download.pytorch.org/whl/torch_stable.html && \
-    pip install --no-cache-dir prompttools && \
-    pip install --no-cache-dir txtai${COMPONENTS} && \
-    python -c "import sys, importlib.util as util; 1 if util.find_spec('nltk') else sys.exit(); import nltk; nltk.download('punkt')"
 
 COPY nlp/Gemfile .
 #TODO: Create gemspec for ferret

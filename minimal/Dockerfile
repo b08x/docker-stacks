@@ -5,15 +5,13 @@ LABEL maintainer="Kenta Murata <mrkn@mrkn.jp>"
 
 USER root
 
-ENV USER jovyan
-
 ARG GROUP_ID=1041
 
 RUN groupadd -g $GROUP_ID devops
 
-RUN usermod -a -G sudo $USER && usermod -a -G $GROUP_ID $USER
+RUN usermod -a -G sudo $NB_USER && usermod -a -G $GROUP_ID $NB_USER
 
-RUN echo "$USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/99-$USER && chmod 0440 /etc/sudoers.d/99-$USER
+RUN echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/99-$NB_USER && chmod 0440 /etc/sudoers.d/99-$NB_USER
 
 # Pre-requisites
 RUN apt-get update && apt-get install -y -V --no-install-recommends \
@@ -96,17 +94,17 @@ COPY --from=rubylang/ruby:3.1.3-focal \
   /usr/local/share/man/man1/ruby.1 \
   /usr/local/share/man/man1/
 
-WORKDIR /home/$USER
+WORKDIR /home/$NB_USER
 
 COPY minimal/Gemfile .
 
 RUN mkdir -pv output && chmod 2775 output
 
-RUN echo "[[ -f ~/.env ]] && source ~/.env" >> /home/$USER/.bashrc
+RUN echo "[[ -f ~/.env ]] && source ~/.env" >> /home/$NB_USER/.bashrc
 
-RUN chown -R $USER:$GROUP_ID /home/$USER
+RUN chown -R $NB_USER:$GROUP_ID /home/$NB_USER
 
-USER $NB_UID
+NB_USER $NB_UID
 
 RUN echo "gem: --user-install" >> $HOME/.gemrc
 
@@ -116,5 +114,7 @@ ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$PATH
 ENV BUNDLE_PATH $HOME/.local/share/gem
 
 RUN bundle install
+
+RUN conda update jupyterlab -y && conda install pip -y
 
 RUN iruby register --force

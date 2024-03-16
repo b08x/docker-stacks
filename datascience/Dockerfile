@@ -5,8 +5,6 @@ LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 
 USER root
 
-ENV USER jovyan
-
 RUN apt-get update && \
     apt-get install -y -V --no-install-recommends gpg-agent
 
@@ -30,47 +28,47 @@ RUN curl -sfSL -o /tmp/apache-arrow-apt-source-latest.deb \
   apt install -y \
   libgirepository1.0-dev
 
-RUN mkdir -pv /home/$USER/packages
+RUN mkdir -pv /home/$NB_USER/packages
 
 COPY packages packages/
 
 RUN apt install -y --no-install-recommends \
-    /home/$USER/packages/gir1.2-arrow-1.0_11.0.0-1_amd64.deb \
-    /home/$USER/packages/gir1.2-arrow-cuda-1.0_11.0.0-1_amd64.deb \
-    /home/$USER/packages/gir1.2-gandiva-1.0_11.0.0-1_amd64.deb \
-    /home/$USER/packages/gir1.2-parquet-1.0_11.0.0-1_amd64.deb \
-    /home/$USER/packages/gir1.2-plasma-1.0_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-cuda-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-cuda-glib-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-cuda-glib1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-cuda1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-dataset-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-dataset1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-flight-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-flight1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-glib-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libarrow-glib1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libgandiva-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libgandiva-glib-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libgandiva-glib1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libgandiva1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libparquet-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libparquet-glib-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libparquet-glib1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libparquet1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libplasma-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libplasma-glib-dev_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libplasma-glib1100_11.0.0-1_amd64.deb \
-    /home/$USER/packages/libplasma1100_11.0.0-1_amd64.deb && \
+    /home/$NB_USER/packages/gir1.2-arrow-1.0_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/gir1.2-arrow-cuda-1.0_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/gir1.2-gandiva-1.0_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/gir1.2-parquet-1.0_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/gir1.2-plasma-1.0_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libarrow-cuda-dev_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libarrow-cuda-glib-dev_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libarrow-cuda-glib1100_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libarrow-cuda1100_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libarrow-dataset-dev_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libarrow-dataset1100_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libarrow-dev_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libarrow-flight-dev_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libarrow-flight1100_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libarrow-glib-dev_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libarrow-glib1100_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libgandiva-dev_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libgandiva-glib-dev_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libgandiva-glib1100_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libgandiva1100_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libparquet-dev_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libparquet-glib-dev_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libparquet-glib1100_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libparquet1100_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libplasma-dev_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libplasma-glib-dev_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libplasma-glib1100_11.0.0-1_amd64.deb \
+    /home/$NB_USER/packages/libplasma1100_11.0.0-1_amd64.deb && \
     apt-get autoremove -y && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /home/$USER
+WORKDIR /home/$NB_USER
 
 COPY datascience/Gemfile .
 
-RUN chown -R $USER:$GROUP_ID /home/$USER
+RUN chown -R $NB_USER:$GROUP_ID /home/$NB_USER
 
 USER $NB_UID
 

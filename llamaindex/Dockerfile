@@ -3,18 +3,12 @@ FROM b08x/notebook-datascience:$BASE_IMAGE_TAG
 
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 
-USER root
-
-ENV USER jovyan
-
-RUN apt-get update && \
-    apt-get install -y -V --no-install-recommends gpg-agent && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
-
 USER $NB_UID
 
-WORKDIR /home/$USER
+WORKDIR /home/$NB_USER
+
+# List of txtai components to install
+ARG COMPONENTS=[all]
 
 RUN \
     pip --no-cache-dir install spacy && \
