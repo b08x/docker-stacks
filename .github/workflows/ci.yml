@@ -18,8 +18,8 @@ jobs:
     strategy:
       matrix:
         image_base_name:
-          # - minimal
-          - datascience
+          - minimal
+          # - datascience
           # - llamaindex
           # - nlp
           # - audio
