@@ -1,5 +1,5 @@
 ARG BASE_IMAGE_TAG=latest
-FROM b08x/notebook-llamaindex:$BASE_IMAGE_TAG
+FROM b08x/notebook-datascience:$BASE_IMAGE_TAG
 
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 
@@ -33,6 +33,10 @@ USER $NB_USER
 WORKDIR /home/$NB_USER
 # Locale environment variables
 ENV LC_ALL=C.UTF-8
+
+RUN pip --no-cache-dir install spacy && \
+    python3 -m spacy download en_core_web_sm && \
+    python3 -m spacy download en_core_web_lg
 
 COPY nlp/Gemfile .
 #TODO: Create gemspec for ferret

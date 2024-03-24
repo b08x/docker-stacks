@@ -11,9 +11,6 @@ WORKDIR /home/$NB_USER
 ARG COMPONENTS=[all]
 
 RUN \
-    pip --no-cache-dir install spacy && \
-    python3 -m spacy download en_core_web_sm && \
-    python3 -m spacy download en_core_web_lg && \
     pip install --no-cache-dir -U pip wheel setuptools && \
     pip install --no-cache-dir llama-index-llms-ollama \
     llama-index-readers-obsidian llama-index-llms-langchain \

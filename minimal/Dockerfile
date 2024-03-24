@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -y -V --no-install-recommends \
       gcc \
       git \
       git-lfs \
+      gpg-agent \
       libczmq-dev \
       libffi-dev \
       libgdbm-dev \
@@ -104,7 +105,9 @@ RUN echo "[[ -f ~/.env ]] && source ~/.env" >> /home/$NB_USER/.bashrc
 
 RUN chown -R $NB_USER:$GROUP_ID /home/$NB_USER
 
-NB_USER $NB_UID
+USER $NB_UID
+
+RUN conda install nbconvert[all] -y && conda install pip -y
 
 RUN echo "gem: --user-install" >> $HOME/.gemrc
 
@@ -114,7 +117,5 @@ ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$PATH
 ENV BUNDLE_PATH $HOME/.local/share/gem
 
 RUN bundle install
-
-RUN conda update jupyterlab -y && conda install pip -y
 
 RUN iruby register --force

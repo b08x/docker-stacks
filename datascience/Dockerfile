@@ -5,9 +5,6 @@ LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 
 USER root
 
-RUN apt-get update && \
-    apt-get install -y -V --no-install-recommends gpg-agent
-
 # Pre-requisites
 RUN echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main' >> /etc/apt/sources.list && \
     echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-11 main' >> /etc/apt/sources.list && \
@@ -17,52 +14,52 @@ RUN echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main' >> /etc/apt/
     rm -rf /var/lib/apt/lists/*
 
 # Apache Arrow
-ENV APACHE_ARROW_VERSION=10.0.0
+# ENV APACHE_ARROW_VERSION=10.0.0
 
-RUN curl -sfSL -o /tmp/apache-arrow-apt-source-latest.deb \
-  https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb && \
-  apt install -y --install-recommends \
-  /tmp/apache-arrow-apt-source-latest.deb && \
-  rm -f /tmp/apache-arrow-apt-source-latest.deb && \
-  apt update -qq && \
-  apt install -y \
-  libgirepository1.0-dev
+# RUN curl -sfSL -o /tmp/apache-arrow-apt-source-latest.deb \
+#   https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb && \
+#   apt install -y --install-recommends \
+#   /tmp/apache-arrow-apt-source-latest.deb && \
+#   rm -f /tmp/apache-arrow-apt-source-latest.deb && \
+#   apt update -qq && \
+#   apt install -y \
+#   libgirepository1.0-dev
 
-RUN mkdir -pv /home/$NB_USER/packages
+# RUN mkdir -pv /home/$NB_USER/packages
 
-COPY packages packages/
+# COPY packages packages/
 
-RUN apt install -y --no-install-recommends \
-    /home/$NB_USER/packages/gir1.2-arrow-1.0_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/gir1.2-arrow-cuda-1.0_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/gir1.2-gandiva-1.0_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/gir1.2-parquet-1.0_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/gir1.2-plasma-1.0_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libarrow-cuda-dev_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libarrow-cuda-glib-dev_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libarrow-cuda-glib1100_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libarrow-cuda1100_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libarrow-dataset-dev_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libarrow-dataset1100_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libarrow-dev_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libarrow-flight-dev_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libarrow-flight1100_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libarrow-glib-dev_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libarrow-glib1100_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libgandiva-dev_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libgandiva-glib-dev_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libgandiva-glib1100_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libgandiva1100_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libparquet-dev_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libparquet-glib-dev_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libparquet-glib1100_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libparquet1100_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libplasma-dev_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libplasma-glib-dev_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libplasma-glib1100_11.0.0-1_amd64.deb \
-    /home/$NB_USER/packages/libplasma1100_11.0.0-1_amd64.deb && \
-    apt-get autoremove -y && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# RUN apt install -y --no-install-recommends \
+#     /home/$NB_USER/packages/gir1.2-arrow-1.0_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/gir1.2-arrow-cuda-1.0_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/gir1.2-gandiva-1.0_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/gir1.2-parquet-1.0_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/gir1.2-plasma-1.0_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libarrow-cuda-dev_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libarrow-cuda-glib-dev_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libarrow-cuda-glib1100_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libarrow-cuda1100_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libarrow-dataset-dev_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libarrow-dataset1100_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libarrow-dev_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libarrow-flight-dev_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libarrow-flight1100_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libarrow-glib-dev_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libarrow-glib1100_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libgandiva-dev_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libgandiva-glib-dev_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libgandiva-glib1100_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libgandiva1100_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libparquet-dev_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libparquet-glib-dev_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libparquet-glib1100_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libparquet1100_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libplasma-dev_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libplasma-glib-dev_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libplasma-glib1100_11.0.0-1_amd64.deb \
+#     /home/$NB_USER/packages/libplasma1100_11.0.0-1_amd64.deb && \
+#     apt-get autoremove -y && \
+#     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/$NB_USER
 
