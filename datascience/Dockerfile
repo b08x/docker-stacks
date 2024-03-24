@@ -5,14 +5,6 @@ LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 
 USER root
 
-# Pre-requisites
-RUN echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main' >> /etc/apt/sources.list && \
-    echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-11 main' >> /etc/apt/sources.list && \
-    wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|apt-key add - && \
-    apt-get update -qq && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
-
 # Apache Arrow
 # ENV APACHE_ARROW_VERSION=10.0.0
 
