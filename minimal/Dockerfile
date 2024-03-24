@@ -14,14 +14,15 @@ RUN usermod -a -G sudo $NB_USER && usermod -a -G $GROUP_ID $NB_USER
 RUN echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/99-$NB_USER && chmod 0440 /etc/sudoers.d/99-$NB_USER
 
 # Pre-requisites
-RUN echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main' >> /etc/apt/sources.list && \
+RUN apt-get update && apt-get install -y -V --no-install-recommends gnupg gpg-agent && \
+    echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main' >> /etc/apt/sources.list && \
     echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-11 main' >> /etc/apt/sources.list && \
-    wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|apt-key add - && \
+    wget -O llvm-snapshot.gpg.key http://llvm.org/apt/llvm-snapshot.gpg.key && \
+    apt-key add llvm-snapshot.gpg.key && \
     apt-get update -qq && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
-# Pre-requisites
 RUN apt-get update && apt-get install -y -V --no-install-recommends \
       apt-transport-https gnupg lsb-release apt-utils \
       ca-certificates \
@@ -30,7 +31,6 @@ RUN apt-get update && apt-get install -y -V --no-install-recommends \
       gcc \
       git \
       git-lfs \
-      gpg-agent \
       libczmq-dev \
       libffi-dev \
       libgdbm-dev \
