@@ -1,5 +1,5 @@
 ARG BASE_IMAGE_TAG=latest
-FROM b08x/notebook-datascience:$BASE_IMAGE_TAG
+FROM b08x/notebook-minimal:$BASE_IMAGE_TAG
 
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 
@@ -19,6 +19,7 @@ RUN apt update -qq && \
       tesseract-ocr \
       ghostscript \
       poppler-utils \
+      libgirepository1.0-dev \
       libreoffice \
       graphviz && \
     apt-get autoremove -y && \
