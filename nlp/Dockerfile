@@ -48,6 +48,7 @@ ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$HOME/.local/bin:$PATH
 ENV BUNDLE_PATH $HOME/.local/share/gem
 
 RUN gem install ferret-0.11.9.0.gem && \
+    bundle lock --add-platform x86_64-linux && \
     bundle config build.redic --with-cxx="clang++" --with-cflags="-std=c++0x" && \
     bundle install
 
