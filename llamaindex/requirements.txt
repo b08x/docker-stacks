@@ -11,8 +11,8 @@ pyvis
 IPython
 nbconvert[all]
 prompttools
-pydantic==1.9
-spacy_version>=3.3.0,<3.5.0
+pydantic>=1.9
+spacy_version>=3.7.0
 txtai[all]
 typing_extensions<4.6.0
 unstructured
