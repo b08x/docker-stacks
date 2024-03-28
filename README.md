@@ -13,7 +13,9 @@ This repository is based on [rubydata/docker-stacks](https://github.com/RubyData
 
 ### Minimal Image
 
-### Data Science Image
+### LLM Image
+
+### LlamaStuff Image
 
 ### NLP Image
 

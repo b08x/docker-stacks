@@ -33,14 +33,6 @@ ENV LC_ALL=C.UTF-8
 ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$HOME/.local/bin:$PATH
 ENV BUNDLE_PATH $HOME/.local/share/gem
 
-COPY nlp/requirements.txt .
-
-RUN pip install --no-cache-dir -U pip wheel setuptools && \
-    pip install -r requirements.txt && \
-    python3 -m spacy download en_core_web_sm && \
-    python3 -m spacy download en_core_web_lg && \
-    python -c "import sys, importlib.util as util; 1 if util.find_spec('nltk') else sys.exit(); import nltk; nltk.download('punkt')"
-
 COPY nlp/Gemfile .
 #TODO: Create gemspec for ferret
 COPY gems/ferret-0.11.9.0.gem .

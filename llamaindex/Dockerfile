@@ -7,20 +7,14 @@ USER $NB_UID
 
 WORKDIR /home/$NB_USER
 
-# List of txtai components to install
-ARG COMPONENTS=[all]
+COPY nlp/requirements.txt .
 
-RUN \
-    pip install --no-cache-dir -U pip wheel setuptools && \
-    pip install --no-cache-dir llama-index-llms-ollama \
-    llama-index-readers-obsidian llama-index-llms-langchain \
-    llama-index-graph-stores-nebula llama-index-multi-modal-llms-ollama \
-    llama-index-readers-file unstructured llama-index-embeddings-huggingface \
-    llama-index-vector-stores-chroma && \
-    pip install --no-cache-dir llama_index pyvis IPython && \
-    pip install --no-cache-dir prompttools && \
-    pip install --no-cache-dir txtai${COMPONENTS} && \
+RUN pip install --no-cache-dir -U pip wheel setuptools && \
+    pip install -r requirements.txt && \
+    python3 -m spacy download en_core_web_sm && \
+    python3 -m spacy download en_core_web_lg && \
     python -c "import sys, importlib.util as util; 1 if util.find_spec('nltk') else sys.exit(); import nltk; nltk.download('punkt')"
+
 
 # NOTE: DO NOT CHANGE the version in the path of gem's bin directory
 ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$PATH
