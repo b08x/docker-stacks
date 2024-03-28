@@ -5,6 +5,12 @@ LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 
 USER root
 
+RUN apt install -y -V ca-certificates lsb-release wget && \
+    wget https://packages.red-data-tools.org/$(lsb_release --id --short \
+    | tr 'A-Z' 'a-z')/red-data-tools-apt-source-latest-$(lsb_release --codename --short).deb && \
+    apt install -y -V ./red-data-tools-apt-source-latest-$(lsb_release --codename --short).deb && \
+    apt update -qq
+
 # Apache Arrow
 # ENV APACHE_ARROW_VERSION=10.0.0
 
