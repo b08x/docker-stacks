@@ -47,6 +47,7 @@ RUN apt-get update && apt-get install -y -V --no-install-recommends gnupg gpg-ag
       libzmq3-dev \
       neovim \
       openssl \
+      pandoc \
       ruby-psych \
       software-properties-common \
       mysql-client \
