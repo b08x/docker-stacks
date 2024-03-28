@@ -1,4 +1,6 @@
+
 google-generativeai==0.4.1
+IPython
 llama-index-agent-openai>=0.1.4,<0.3.0
 llama-index-cli==0.1.2
 llama-index-core==0.10.25
@@ -26,12 +28,16 @@ llama-index-readers-obsidian==0.1.3
 llama-index-vector-stores-chroma==0.1.6
 llama-index==0.10.25
 llama-parse==0.4.0
-IPython
 nbconvert[all]
+openai==1.14.3
 prompttools==0.0.46
 pydantic>=1.7.4,!=1.8,!=1.8.1,<3.0.0
 pyvis
 spacy
+SQLAlchemy==2.0.29
+torch==2.1.2+cpu 
+torchaudio
+torchvision==0.16.2+cpu 
 txtai[all]
 typing_extensions<4.6.0
 unstructured
