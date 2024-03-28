@@ -27,9 +27,6 @@ RUN apt update && \
     apt-get autoremove -y && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN echo "gem: --user-install" >> /home/$USER/.gemrc && \
-    echo "gem: --user-install" >> /etc/gemrc && \
-    echo "gem: --no-user-install --no-document" >> /root/.gemrc
 
 WORKDIR /home/$USER
 
@@ -39,7 +36,7 @@ COPY gems/ferret-0.11.9.0.gem .
 
 RUN chown -R $USER:$GROUP_ID /home/$USER
 
-RUN gem update --system 3.5.5
+RUN gem update --system 3.5.7
 
 USER $USER
 

@@ -2,6 +2,7 @@ ARG BASE_IMAGE_TAG=latest
 FROM b08x/notebook-minimal:$BASE_IMAGE_TAG
 
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
+LABEL contributor="Kenta Murata <mrkn@mrkn.jp>"
 
 USER root
 
@@ -23,29 +24,26 @@ RUN apt update -qq && \
       libreoffice \
       graphviz && \
     apt-get autoremove -y && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-RUN echo "gem: --user-install" >> /home/$NB_USER/.gemrc && \
-    echo "gem: --user-install" >> /etc/gemrc && \
-    echo "gem: --no-user-install --no-document" >> /root/.gemrc && \
-    gem update --system 3.5.5 && chown -R $NB_USER:$GROUP_ID /home/$NB_USER
+    apt-get clean
 
 USER $NB_USER
-WORKDIR /home/$NB_USER
-# Locale environment variables
-ENV LC_ALL=C.UTF-8
 
-RUN pip --no-cache-dir install spacy && \
+ENV LC_ALL=C.UTF-8
+# NOTE: DO NOT CHANGE the version in the path of gem's bin directory
+ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$HOME/.local/bin:$PATH
+ENV BUNDLE_PATH $HOME/.local/share/gem
+
+COPY nlp/requirements.txt .
+
+RUN pip install --no-cache-dir -U pip wheel setuptools && \
+    pip install -r requirements.txt && \
     python3 -m spacy download en_core_web_sm && \
-    python3 -m spacy download en_core_web_lg
+    python3 -m spacy download en_core_web_lg && \
+    python -c "import sys, importlib.util as util; 1 if util.find_spec('nltk') else sys.exit(); import nltk; nltk.download('punkt')"
 
 COPY nlp/Gemfile .
 #TODO: Create gemspec for ferret
 COPY gems/ferret-0.11.9.0.gem .
-
-# NOTE: DO NOT CHANGE the version in the path of gem's bin directory
-ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$HOME/.local/bin:$PATH
-ENV BUNDLE_PATH $HOME/.local/share/gem
 
 RUN gem install ferret-0.11.9.0.gem && \
     bundle lock --add-platform x86_64-linux && \

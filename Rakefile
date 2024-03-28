@@ -52,6 +52,11 @@ ALL_IMAGES.each do |image|
     sh "docker build -f #{image}/Dockerfile #{DOCKER_FLAGS} --rm --force-rm -t #{OWNER}/notebook-#{image}:latest ."
   end
 
+  desc "Make #{OWNER}/#{image} image"
+  task "make/#{image}" do  
+    sh "docker build -f #{image}/Dockerfile #{DOCKER_FLAGS} --rm --force-rm -t #{OWNER}/notebook-#{image}:latest ."
+  end
+
   desc "Tag #{OWNER}/#{image} image"
   task "tag/#{image}" => "build/#{image}" do
     sh "docker tag #{OWNER}/notebook-#{image}:latest #{OWNER}/notebook-#{image}:#{revision_tag}"

@@ -1,31 +1,29 @@
 ARG BASE_IMAGE_TAG=f3079808ca8c
 FROM jupyter/scipy-notebook:$BASE_IMAGE_TAG
 
-LABEL maintainer="Kenta Murata <mrkn@mrkn.jp>"
+LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
+LABEL contributor="Kenta Murata <mrkn@mrkn.jp>"
 
 USER root
 
-ARG GROUP_ID=1041
+ARG GROUP=1041
 
-RUN groupadd -g $GROUP_ID devops
-
-RUN usermod -a -G sudo $NB_USER && usermod -a -G $GROUP_ID $NB_USER
-
-RUN echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/99-$NB_USER && chmod 0440 /etc/sudoers.d/99-$NB_USER
+RUN groupadd -g $GROUP notebook && \
+    usermod -a -G sudo $NB_USER && usermod -a -G $GROUP $NB_USER && \
+    echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/99-$NB_USER && \
+    chmod 0440 /etc/sudoers.d/99-$NB_USER
 
 # Pre-requisites
-RUN apt-get update && apt-get install -y -V --no-install-recommends gnupg gpg-agent && \
+RUN apt-get update && apt-get install -y -V --no-install-recommends gnupg gpg-agent \
+    apt-transport-https gnupg lsb-release apt-utils apt-transport-https ca-certificates && \
     echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main' >> /etc/apt/sources.list && \
     echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-11 main' >> /etc/apt/sources.list && \
     wget -O llvm-snapshot.gpg.key http://llvm.org/apt/llvm-snapshot.gpg.key && \
     apt-key add llvm-snapshot.gpg.key && \
     apt-get update -qq && \
     apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && apt-get install -y -V --no-install-recommends \
-      apt-transport-https gnupg lsb-release apt-utils \
-      ca-certificates \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get update && apt-get install -y -V --no-install-recommends \
       curl \
       cmake \
       gcc \
@@ -58,7 +56,7 @@ RUN apt-get update && apt-get install -y -V --no-install-recommends \
       tzdata \
       zlib1g-dev \
       wget && \
-  apt-get clean && rm -rf /var/lib/apt/lists/*
+   apt-get clean
 
 # Copy Ruby 3.1.3 from rubylang/ruby
 COPY --from=rubylang/ruby:3.1.3-focal \
@@ -107,21 +105,18 @@ WORKDIR /home/$NB_USER
 
 COPY minimal/Gemfile .
 
-RUN mkdir -pv output && chmod 2775 output
+RUN echo "[[ -f ~/.env ]] && source ~/.env" >> /home/$NB_USER/.bashrc && \
+    echo "gem: --user-install" >> /home/$NB_USER/.gemrc && \
+    echo "gem: --user-install" >> /etc/gemrc && \
+    echo "gem: --no-user-install --no-document" >> /root/.gemrc && \
+    gem update --system 3.5.7
 
-RUN echo "[[ -f ~/.env ]] && source ~/.env" >> /home/$NB_USER/.bashrc
-
-RUN chown -R $NB_USER:$GROUP_ID /home/$NB_USER
+RUN chown -R $NB_UID:$GROUP /home/$NB_USER
 
 USER $NB_UID
 
-RUN conda install nbconvert[all] -y && conda install pip -y
-
-RUN echo "gem: --user-install" >> $HOME/.gemrc
-
 # NOTE: DO NOT CHANGE the version in the path of gem's bin directory
 ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$PATH
-
 ENV BUNDLE_PATH $HOME/.local/share/gem
 
 RUN bundle install

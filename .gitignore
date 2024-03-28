@@ -2,3 +2,4 @@ data/
 .env
 .tool-versions
 Gemfile.lock
+nlp/language_models/
