@@ -19,6 +19,13 @@ This repository is based on [rubydata/docker-stacks](https://github.com/RubyData
 
 ### NLP Image
 
+
+minimal --> nlp --> llamaindex 
+
+agenta ->
+
+
+
 Contains gems necessary to build an application working with Large Language Models (LLMs).
 
 Question Answering System: Building a system that can answer questions based on a knowledge base stored in Chroma.
