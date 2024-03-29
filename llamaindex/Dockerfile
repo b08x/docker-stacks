@@ -7,7 +7,7 @@ USER $NB_UID
 
 WORKDIR /home/$NB_USER
 
-COPY nlp/requirements.txt .
+COPY llamaindex/requirements.txt .
 
 RUN pip install --no-cache-dir -U pip wheel setuptools && \
     pip install -r requirements.txt
