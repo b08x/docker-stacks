@@ -1,5 +1,5 @@
 ARG BASE_IMAGE_TAG=latest
-FROM b08x/notebook-minimal:$BASE_IMAGE_TAG
+FROM b08x/notebook-llamaindex:$BASE_IMAGE_TAG
 
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 LABEL contributor="Kenta Murata <mrkn@mrkn.jp>"

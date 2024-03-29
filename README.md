@@ -20,9 +20,10 @@ This repository is based on [rubydata/docker-stacks](https://github.com/RubyData
 ### NLP Image
 
 
-minimal --> nlp --> llamaindex 
+minimal --> llamaindex --> nlp 
 
-agenta ->
+minimal -> audio
+
 
 
 
