@@ -1,5 +1,5 @@
 ARG BASE_IMAGE_TAG=latest
-FROM b08x/notebook-llamaindex:$BASE_IMAGE_TAG
+FROM b08x/notebook-minimal:$BASE_IMAGE_TAG
 
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 LABEL contributor="Kenta Murata <mrkn@mrkn.jp>"
@@ -22,6 +22,7 @@ RUN apt update -qq && \
       poppler-utils \
       libgirepository1.0-dev \
       libreoffice \
+      tidy \
       graphviz && \
     apt-get autoremove -y && \
     apt-get clean
@@ -32,6 +33,12 @@ ENV LC_ALL=C.UTF-8
 # NOTE: DO NOT CHANGE the version in the path of gem's bin directory
 ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$HOME/.local/bin:$PATH
 ENV BUNDLE_PATH $HOME/.local/share/gem
+
+RUN pip install --no-cache-dir -U pip wheel setuptools && \
+    pip install --no-cache-dir spacy && \
+    python3 -m spacy download en_core_web_sm && \
+    python3 -m spacy download en_core_web_lg && \
+    python -c "import sys, importlib.util as util; 1 if util.find_spec('nltk') else sys.exit(); import nltk; nltk.download('punkt')"
 
 COPY nlp/Gemfile .
 #TODO: Create gemspec for ferret
