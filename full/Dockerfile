@@ -155,4 +155,7 @@ RUN gem install ferret-0.11.9.0.gem && \
     bundle config build.redic --with-cxx="clang++" --with-cflags="-std=c++0x" && \
     bundle install && gem clean
 
+# To fix: qt.qpa.xcb could not connect to display
+ENV QT_QPA_PLATFORM offscreen
+
 RUN iruby register --force

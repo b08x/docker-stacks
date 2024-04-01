@@ -161,6 +161,7 @@ gem 'zip'
 
 gem 'linguistics'
 gem 'pdf-textstream'
+gem 'algorithms'
 
 #TODO:
 # source "https://rubygems.pkg.github.com/b08x" do
