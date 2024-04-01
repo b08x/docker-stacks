@@ -1,11 +1,8 @@
 OWNER = 'b08x'.freeze
 ALL_IMAGES = %w[
-  minimal
-  datascience
-  llamaindex
-  nlp
-  audio
+  full
 ].each(&:freeze).freeze
+
 
 BASE_IMAGES = ALL_IMAGES.map do |name|
   base_image_name, base_image_tag = nil

@@ -113,7 +113,7 @@ gem 'langchainrb'
 gem 'lemmatizer'
 gem 'lingua'
 gem 'loofah'
-gem 'llm_memory'
+# gem 'llm_memory'
 gem 'mimemagic'
 gem 'networkx'
 gem 'nokogiri'
@@ -159,7 +159,9 @@ gem 'sciruby'
 gem 'treat'
 gem 'zip'
 
-gem "pdf-textstream"
+gem 'linguistics'
+gem 'pdf-textstream'
+
 #TODO:
 # source "https://rubygems.pkg.github.com/b08x" do
 #   gem "ferret"
