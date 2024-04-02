@@ -134,7 +134,7 @@ RUN echo "[[ -f ~/.env ]] && source ~/.env" >> /home/$NB_USER/.bashrc && \
     echo "gem: --no-user-install --no-document" >> /root/.gemrc && \
     gem update --system --platform x86_64-linux && gem clean
 
-COPY nlp/Gemfile .
+COPY full/Gemfile .
 COPY gems/ferret-0.11.9.0.gem .
 
 RUN chown -R $NB_UID:100 /home/$NB_USER

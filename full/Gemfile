@@ -159,9 +159,11 @@ gem 'sciruby'
 gem 'treat'
 gem 'zip'
 
-gem 'linguistics'
-gem 'pdf-textstream'
 gem 'algorithms'
+gem 'java'
+gem 'linguistics'
+gem 'linkparser'
+gem 'pdf-textstream'
 
 #TODO:
 # source "https://rubygems.pkg.github.com/b08x" do
