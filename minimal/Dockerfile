@@ -59,6 +59,7 @@ RUN apt-get update && apt-get install -y -V --no-install-recommends dialog gnupg
       libxslt1-dev \
       libyaml-dev \
       libzmq3-dev \
+      link-grammar \
       minisat \
       mysql-client \
       neovim \
