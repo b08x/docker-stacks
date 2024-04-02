@@ -4,6 +4,16 @@ FROM b08x/notebook-minimal:$BASE_IMAGE_TAG
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 LABEL contributor="Kenta Murata <mrkn@mrkn.jp>"
 
+
+USER root
+
+WORKDIR /home/$NB_USER
+
+COPY full/Gemfile .
+COPY gems/ferret-0.11.9.0.gem .
+
+RUN chown -R $NB_UID:100 /home/$NB_USER
+
 USER $NB_USER
 
 ENV LC_ALL=C.UTF-8

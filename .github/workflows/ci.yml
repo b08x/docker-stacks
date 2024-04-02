@@ -18,11 +18,11 @@ jobs:
     strategy:
       matrix:
         image_base_name:
-          - full
+          # - full
           - minimal
           # - datascience
           # - llamaindex
-          # - nlp
+          - nlp
           # - audio
 
     name: notebook-${{ matrix.image_base_name }}
