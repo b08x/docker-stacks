@@ -19,7 +19,7 @@ jobs:
       matrix:
         image_base_name:
           # - full
-          - minimal
+          # - minimal
           # - datascience
           # - llamaindex
           - nlp
