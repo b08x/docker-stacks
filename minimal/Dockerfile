@@ -59,6 +59,7 @@ RUN apt-get update && apt-get install -y -V --no-install-recommends dialog gnupg
       libxslt1-dev \
       libyaml-dev \
       libzmq3-dev \
+      liblink-grammar-dev \
       link-grammar \
       minisat \
       mysql-client \
@@ -71,6 +72,7 @@ RUN apt-get update && apt-get install -y -V --no-install-recommends dialog gnupg
       plotutils \
       poppler-utils \
       postgresql-client \
+      python3-link-grammar \
       ruby-psych \
       rsync \
       software-properties-common \
