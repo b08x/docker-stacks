@@ -4,36 +4,6 @@ FROM b08x/notebook-minimal:$BASE_IMAGE_TAG
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 LABEL contributor="Kenta Murata <mrkn@mrkn.jp>"
 
-USER root
-
-RUN apt update -qq && \
-    apt install -y -V --no-install-recommends  \
-      exiftool \
-      ghostscript \
-      gnuplot \
-      libcairo2-dev \
-      libczmq-dev \
-      libfftw3-dev \
-      libgirepository1.0-dev \
-      libglib2.0-dev \
-      libgsl-dev \
-      libmagick++-dev \
-      libplot2c2 \
-      libpoppler-glib-dev \
-      libreoffice \
-      libtamuanova-0.2 \
-      minisat \
-      neovim \
-      pdftk \
-      plotutils \
-      poppler-utils \
-      tesseract-ocr \
-      tidy \
-      zip \
-      graphviz && \
-    apt-get autoremove -y && \
-    apt-get clean
-
 USER $NB_USER
 
 ENV LC_ALL=C.UTF-8

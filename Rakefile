@@ -1,5 +1,7 @@
 OWNER = 'b08x'.freeze
 ALL_IMAGES = %w[
+  minimal
+  nlp
   full
 ].each(&:freeze).freeze
 

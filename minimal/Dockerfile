@@ -14,47 +14,70 @@ RUN groupadd -g $GROUP notebook && \
     chmod 0440 /etc/sudoers.d/99-$NB_USER
 
 # Pre-requisites
-RUN apt-get update && apt-get install -y -V --no-install-recommends gnupg gpg-agent \
+RUN apt-get update && apt-get install -y -V --no-install-recommends dialog gnupg gpg-agent \
     apt-transport-https gnupg lsb-release apt-utils apt-transport-https ca-certificates && \
     echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main' >> /etc/apt/sources.list && \
     echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-11 main' >> /etc/apt/sources.list && \
     wget -O llvm-snapshot.gpg.key http://llvm.org/apt/llvm-snapshot.gpg.key && \
     apt-key add llvm-snapshot.gpg.key && \
-    apt-get update -qq && \
-    apt-get autoremove -y && \
+    apt-get update -qq && apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* && \
-    apt-get update && apt-get install -y -V --no-install-recommends \
-      curl \
+    apt-get update -qq && apt-get install -y -V --no-install-recommends \
       cmake \
+      curl \
+      exiftool \
       gcc \
+      ghostscript \
       git \
       git-lfs \
+      gnuplot \
+      graphviz \ 
+      jruby \
+      libcairo2-dev \
       libczmq-dev \
       libffi-dev \
+      libfftw3-dev \
       libgdbm-dev \
+      libgirepository1.0-dev \
+      libglib2.0-dev \
       libgmp-dev \
+      libgsl-dev \
       liblapacke-dev \
+      libmagick++-dev \
       libmysqlclient-dev \
       libncurses5-dev \
       libopenblas-dev \
+      libplot2c2 \
+      libpoppler-glib-dev \
       libpq-dev \
       libreadline-dev \
+      libreoffice \
       libsqlite3-dev \
       libssl-dev \
+      libtamuanova-0.2 \
       libxml2-dev \
       libxslt1-dev \
       libyaml-dev \
       libzmq3-dev \
+      minisat \
+      mysql-client \
       neovim \
+      openjdk-21-jdk-headless \
       openssl \
       pandoc \
-      ruby-psych \
-      software-properties-common \
-      mysql-client \
+      pdftk \
       pkg-config \
+      plotutils \
+      poppler-utils \
       postgresql-client \
+      ruby-psych \
+      rsync \
+      software-properties-common \
       sqlite3 \
+      tesseract-ocr \
+      tidy \
       tzdata \
+      zip \     
       zlib1g-dev \
       wget && \
    apt-get clean
@@ -104,22 +127,77 @@ COPY --from=rubylang/ruby:3.1.3-focal \
 
 WORKDIR /home/$NB_USER
 
-COPY minimal/Gemfile .
-
-RUN echo "[[ -f ~/.env ]] && source ~/.env" >> /home/$NB_USER/.bashrc && \
-    echo "gem: --user-install" >> /home/$NB_USER/.gemrc && \
-    echo "gem: --user-install" >> /etc/gemrc && \
+RUN echo "gem: --user-install" >> /etc/gemrc && \
     echo "gem: --no-user-install --no-document" >> /root/.gemrc && \
-    gem update --system 3.5.7
-
-RUN chown -R $NB_UID:$GROUP /home/$NB_USER
+    gem update --system --platform x86_64-linux && gem clean
 
 USER $NB_UID
 
+RUN echo "[[ -f ~/.env ]] && source ~/.env" >> $HOME/.bashrc && \
+    echo "gem: --user-install" >> $HOME/.gemrc
+
 # NOTE: DO NOT CHANGE the version in the path of gem's bin directory
 ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$PATH
-ENV BUNDLE_PATH $HOME/.local/share/gem
 
-RUN bundle install
+# Install basic gems
+RUN \
+    gem install irb -v ">= 1.3.8.pre.9" && \
+    gem install iruby -v ">= 0.7.4" && \
+    gem install pycall -v ">= 1.5.1" && \
+    gem install \
+        activesupport \
+        awesome_print \
+        bcrypt_pbkdf \
+        bundler \
+        childprocess \
+        colorize \
+        coltrane \
+        debug \
+        dry-initializer \
+        dry-monads \
+        ed25519 \
+        eventmachine \
+        ffi \
+        fractional \
+        geo_coord \
+        hashie \
+        highline \
+        i18n \
+        json \
+        jsonl \
+        kramdown \
+        logging \
+        minitest \
+        mocha \
+        multi_json \
+        mysql2 \
+        net-ssh \
+        open3 \
+        open4 \
+        parallel \
+        pastel \
+        pg \
+        pry \
+        pry-doc \
+        psych \
+        rake \
+        rdoc \
+        redcarpet \
+        rexml \
+        rouge \
+        rugged \
+        ruport \
+        sequel \
+        sqlite3 \
+        sync \
+        sys-proctable \
+        treetop \
+        tty-box \
+        tty-command \
+        tty-config \
+        tty-markdown \
+        tty-prompt \
+        tty-screen \
+        yaml
 
 RUN iruby register --force
