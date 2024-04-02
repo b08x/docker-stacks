@@ -9,7 +9,7 @@ USER root
 
 WORKDIR /home/$NB_USER
 
-COPY full/Gemfile .
+COPY nlp/Gemfile .
 COPY gems/ferret-0.11.9.0.gem .
 
 RUN chown -R $NB_UID:100 /home/$NB_USER
@@ -25,10 +25,6 @@ RUN pip install spacy && \
     python3 -m spacy download en_core_web_trf && \
     python3 -m spacy download en_core_web_lg && \
     python -c "import sys, importlib.util as util; 1 if util.find_spec('nltk') else sys.exit(); import nltk; nltk.download('punkt')"
-
-COPY nlp/Gemfile .
-#TODO: Create gemspec for ferret
-COPY gems/ferret-0.11.9.0.gem .
 
 RUN gem install ferret-0.11.9.0.gem && \
     bundle lock --add-platform x86_64-linux && \
