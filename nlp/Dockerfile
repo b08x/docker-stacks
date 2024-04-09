@@ -20,7 +20,7 @@ ENV LC_ALL=C.UTF-8
 ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$HOME/.local/bin:$PATH
 ENV BUNDLE_PATH $HOME/.local/share/gem
 
-RUN mamba install --yes 'jupyter-ai' 'google-generativeai' 'huggingface_hub' 'ipython' 'ipywidgets' \
+RUN mamba install --channel conda-forge --yes 'jupyter-ai' 'google-generativeai' 'huggingface_hub' 'ipython' 'ipywidgets' \
     'llama-index' 'llama-index-cli' 'llama-index-core' \
     'langchain-anthropic' 'langchain-google-genai' 'cohere' \
     'llama-index-embeddings-huggingface'\

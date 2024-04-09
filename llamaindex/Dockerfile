@@ -7,7 +7,7 @@ USER $NB_UID
 
 WORKDIR /home/$NB_USER
 
-RUN mamba install --yes 'jupyter-ai' 'google-generativeai' 'huggingface_hub' 'ipython' 'ipywidgets' \
+RUN mamba install --channel conda-forge --yes 'jupyter-ai' 'google-generativeai' 'huggingface_hub' 'ipython' 'ipywidgets' \
     'llama-index' 'llama-index-cli' 'llama-index-core' \
     'langchain-anthropic' 'langchain-google-genai' 'cohere' \
     'llama-index-embeddings-huggingface'\
