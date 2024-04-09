@@ -1,5 +1,5 @@
 ARG BASE_IMAGE_TAG=f3079808ca8c
-FROM jupyter/scipy-notebook:$BASE_IMAGE_TAG
+FROM jupyter/datascience-notebook:$BASE_IMAGE_TAG
 
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 LABEL contributor="Kenta Murata <mrkn@mrkn.jp>"
