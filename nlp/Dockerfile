@@ -20,17 +20,7 @@ ENV LC_ALL=C.UTF-8
 ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$HOME/.local/bin:$PATH
 ENV BUNDLE_PATH $HOME/.local/share/gem
 
-RUN mamba install --channel conda-forge --yes 'jupyter-ai' 'google-generativeai' 'huggingface_hub' 'ipython' 'ipywidgets' \
-    'llama-index' 'llama-index-cli' 'llama-index-core' \
-    'langchain-anthropic' 'langchain-google-genai' 'cohere' \
-    'llama-index-embeddings-huggingface'\
-    'llama-index-indices-managed-llama-cloud' \
-    'llama-index-llms-anthropic' 'llama-index-llms-gemini' 'llama-index-llms-groq' 'llama-index-llms-langchain' \
-    'llama-index-llms-localai' 'llama-index-llms-ollama' 'llama-index-llms-openai' 'llama-index-multi-modal-llms-ollama' \
-    'llama-index-readers-file' 'llama-index-readers-llama-parse' \
-    'llama-index-vector-stores-chroma' \
-    'llama-parse' 'nbconvert' 'pillow' 'prompttools' \
-    'pydantic' 'pyvis' 'spacy' 'SQLAlchemy' 'torch' 'torchaudio' 'torchvision' 'txtai' && \
+RUN mamba install --yes 'jupyter-ai' 'huggingface_hub' 'ipython' 'ipywidgets' 'nbconvert' 'pillow' 'pydantic' 'pyvis' 'spacy' 'SQLAlchemy' 'txtai' && \
     mamba clean --all -f -y && fix-permissions "${CONDA_DIR}" && fix-permissions "/home/${NB_USER}" && \
     python3 -m spacy download en_core_web_trf && \
     python3 -m spacy download en_core_web_lg && \
