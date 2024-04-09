@@ -1,6 +1,7 @@
 OWNER = 'b08x'.freeze
 ALL_IMAGES = %w[
   minimal
+  llamaindex
   nlp
   full
 ].each(&:freeze).freeze
