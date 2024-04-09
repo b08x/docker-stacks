@@ -22,8 +22,8 @@ RUN apt-get update && apt-get install -y -V --no-install-recommends dialog gnupg
     apt-transport-https gnupg lsb-release apt-utils apt-transport-https ca-certificates && \
     echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main' >> /etc/apt/sources.list && \
     echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-11 main' >> /etc/apt/sources.list && \
-    wget -O llvm-snapshot.gpg.key http://llvm.org/apt/llvm-snapshot.gpg.key && \
-    apt-key add llvm-snapshot.gpg.key && \
+    wget -O /tmp/llvm-snapshot.gpg.key http://llvm.org/apt/llvm-snapshot.gpg.key && \
+    apt-key add /tmp/llvm-snapshot.gpg.key && \
     apt-get update -qq && apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get update -qq && apt-get install -y -V --no-install-recommends \
@@ -134,18 +134,18 @@ COPY --from=rubylang/ruby:3.1.4-jammy \
 
 WORKDIR /home/$NB_USER
 
-RUN echo "gem: --user-install" >> /etc/gemrc && \
+RUN rm -f /home/$NB_USER/.wget-hsts && \
+    echo "gem: --user-install" >> /etc/gemrc && \
     echo "gem: --no-user-install --no-document" >> /root/.gemrc && \
     gem update --system --platform x86_64-linux && gem clean
 
 USER $NB_UID
 
-RUN /bin/bash -o pipefail -c mamba update --all --yes && \
-    mamba clean --all -f -y && fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+RUN mamba update --all --yes && mamba clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && fix-permissions "/home/${NB_USER}"
 
 RUN echo "[[ -f ~/.env ]] && source ~/.env" >> $HOME/.bashrc && \
-    echo "gem: --user-install" >> $HOME/.gemrc
+    echo "gem: --user-instal --no-document" >> $HOME/.gemrc
 
 # NOTE: DO NOT CHANGE the version in the path of gem's bin directory
 ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$PATH
