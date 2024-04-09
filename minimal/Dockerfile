@@ -83,7 +83,7 @@ RUN apt-get update && apt-get install -y -V --no-install-recommends dialog gnupg
       zip \     
       zlib1g-dev \
       wget && \
-   apt-get clean
+      apt-get clean
 
 # Copy Ruby 3.1.3 from rubylang/ruby
 COPY --from=rubylang/ruby:3.1.3-focal \
@@ -136,6 +136,9 @@ RUN echo "gem: --user-install" >> /etc/gemrc && \
 
 USER $NB_UID
 
+RUN conda update -n base -c conda-forge conda -y && \
+    conda install -c conda-forge jupyterlab jupyterlab-git -y
+
 RUN echo "[[ -f ~/.env ]] && source ~/.env" >> $HOME/.bashrc && \
     echo "gem: --user-install" >> $HOME/.gemrc
 
@@ -144,7 +147,7 @@ ENV PATH $HOME/.local/share/gem/ruby/3.1.0/bin:$PATH
 
 # Install basic gems
 RUN \
-    gem install irb -v ">= 1.3.8.pre.9" && \
+    gem install irb && \
     gem install iruby -v ">= 0.7.4" && \
     gem install pycall -v ">= 1.5.1" && \
     gem install \
