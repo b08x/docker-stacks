@@ -3,3 +3,4 @@ data/
 .tool-versions
 Gemfile.lock
 nlp/language_models/
+/**/*/.ipynb_checkpoints
