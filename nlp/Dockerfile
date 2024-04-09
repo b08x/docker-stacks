@@ -4,7 +4,6 @@ FROM b08x/notebook-minimal:$BASE_IMAGE_TAG
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 LABEL contributor="Kenta Murata <mrkn@mrkn.jp>"
 
-
 USER root
 
 WORKDIR /home/$NB_USER
@@ -27,7 +26,6 @@ RUN pip install spacy && \
     python -c "import sys, importlib.util as util; 1 if util.find_spec('nltk') else sys.exit(); import nltk; nltk.download('punkt')"
 
 RUN gem install ferret-0.11.9.0.gem && \
-    gem install ruby-spacy && \
     bundle lock --add-platform x86_64-linux && \
     bundle config build.redic --with-cxx="clang++" --with-cflags="-std=c++0x" && \
     bundle install
