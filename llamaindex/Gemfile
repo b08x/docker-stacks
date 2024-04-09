@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 # Install basic gems
-gem 'irb', '>= 1.3.8.pre.9'
+gem 'irb'
 gem 'iruby', '>= 0.7.4'
 gem 'pycall', '>= 1.5.1'
 
