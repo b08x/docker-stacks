@@ -32,7 +32,7 @@ RUN apt-get update && apt-get install -y -V --no-install-recommends dialog gnupg
       git-lfs \
       gnuplot \
       graphviz \ 
-      jruby \
+      # jruby \
       libcairo2-dev \
       libczmq-dev \
       libffi-dev \
@@ -64,7 +64,7 @@ RUN apt-get update && apt-get install -y -V --no-install-recommends dialog gnupg
       minisat \
       mysql-client \
       neovim \
-      openjdk-21-jdk-headless \
+      openjdk-17-jdk-headless \
       openssl \
       pandoc \
       pdftk \
@@ -85,8 +85,8 @@ RUN apt-get update && apt-get install -y -V --no-install-recommends dialog gnupg
       wget && \
       apt-get clean
 
-# Copy Ruby 3.1.3 from rubylang/ruby
-COPY --from=rubylang/ruby:3.1.3-focal \
+# Copy Ruby 3.1.4 from rubylang/ruby
+COPY --from=rubylang/ruby:3.1.4-jammy \
   /usr/local/bin/bundle \
   /usr/local/bin/bundler \
   /usr/local/bin/erb \
@@ -99,29 +99,29 @@ COPY --from=rubylang/ruby:3.1.3-focal \
   /usr/local/bin/ruby \
   /usr/local/bin/
 
-COPY --from=rubylang/ruby:3.1.3-focal \
+COPY --from=rubylang/ruby:3.1.4-jammy \
   /usr/local/etc/gemrc \
   /usr/local/etc/
 
 # NOTE: DO NOT CHANGE the version in the path of include directory
-COPY --from=rubylang/ruby:3.1.3-focal \
+COPY --from=rubylang/ruby:3.1.4-jammy \
   /usr/local/include/ruby-3.1.0/ \
   /usr/local/include/ruby-3.1.0/
 
-COPY --from=rubylang/ruby:3.1.3-focal \
+COPY --from=rubylang/ruby:3.1.4-jammy \
   /usr/local/lib/libruby.so \
   /usr/local/lib/libruby.so.* \
   /usr/local/lib/
 
-COPY --from=rubylang/ruby:3.1.3-focal \
+COPY --from=rubylang/ruby:3.1.4-jammy \
   /usr/local/lib/pkgconfig/ \
   /usr/local/lib/pkgconfig/
 
-COPY --from=rubylang/ruby:3.1.3-focal \
+COPY --from=rubylang/ruby:3.1.4-jammy \
   /usr/local/lib/ruby/ \
   /usr/local/lib/ruby/
 
-COPY --from=rubylang/ruby:3.1.3-focal \
+COPY --from=rubylang/ruby:3.1.4-jammy \
   /usr/local/share/man/man1/erb.1 \
   /usr/local/share/man/man1/irb.1 \
   /usr/local/share/man/man1/ri.1 \
