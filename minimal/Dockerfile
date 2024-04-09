@@ -1,5 +1,5 @@
-ARG BASE_IMAGE_TAG=f3079808ca8c
-FROM jupyter/datascience-notebook:$BASE_IMAGE_TAG
+ARG BASE_IMAGE_TAG=latest
+FROM quay.io/jupyter/datascience-notebook:$BASE_IMAGE_TAG
 
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 LABEL contributor="Kenta Murata <mrkn@mrkn.jp>"
@@ -135,9 +135,6 @@ RUN echo "gem: --user-install" >> /etc/gemrc && \
     gem update --system --platform x86_64-linux && gem clean
 
 USER $NB_UID
-
-RUN conda update -n base -c conda-forge conda -y && \
-    conda install -c conda-forge jupyterlab jupyterlab-git -y
 
 RUN echo "[[ -f ~/.env ]] && source ~/.env" >> $HOME/.bashrc && \
     echo "gem: --user-install" >> $HOME/.gemrc
