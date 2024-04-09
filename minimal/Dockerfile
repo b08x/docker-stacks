@@ -6,6 +6,10 @@ LABEL contributor="Kenta Murata <mrkn@mrkn.jp>"
 
 USER root
 
+ENV PATH=/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin HOME=/home/jovyan
+
+ENV CONDA_DIR=/opt/conda SHELL=/bin/bash NB_USER=jovyan NB_UID=1000 NB_GID=100 LC_ALL=C.UTF-8 LANG=C.UTF-8 LANGUAGE=C.UTF-8
+
 ARG GROUP=1041
 
 RUN groupadd -g $GROUP notebook && \
@@ -135,6 +139,10 @@ RUN echo "gem: --user-install" >> /etc/gemrc && \
     gem update --system --platform x86_64-linux && gem clean
 
 USER $NB_UID
+
+RUN /bin/bash -o pipefail -c mamba update --all --yes && \
+    mamba clean --all -f -y && fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 RUN echo "[[ -f ~/.env ]] && source ~/.env" >> $HOME/.bashrc && \
     echo "gem: --user-install" >> $HOME/.gemrc
