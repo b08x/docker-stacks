@@ -21,7 +21,7 @@ jobs:
           # - full
           # - minimal
           # - datascience
-          - llamaindex
+          # - llamaindex
           - nlp
           # - audio
 
