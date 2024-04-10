@@ -3,11 +3,13 @@ FROM b08x/notebook-minimal:$BASE_IMAGE_TAG
 
 LABEL maintainer="Robert Pannick <rwpannick@gmail.com>"
 
+USER root
+
 WORKDIR /home/$NB_USER
 
 COPY llamaindex/requirements.txt .
 
-RUN chown $NB_USER:100 /home/$NB_USER/requirements.txt
+RUN chown -R $NB_UID:100 /home/$NB_USER/requirements.txt
 
 USER $NB_UID
 
