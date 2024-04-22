@@ -126,7 +126,7 @@ gem 'openssl'
 gem 'open-uri'
 gem 'optimist'
 gem 'osc-ruby'
-gem 'pdf_paradise'
+# gem 'pdf_paradise'
 gem 'pdf-reader'
 gem 'pgvector'
 gem 'poppler'
@@ -166,14 +166,13 @@ gem 'linguistics'
 gem 'linkparser'
 gem 'pdf-textstream'
 
-#TODO:
+# TODO:
 # source "https://rubygems.pkg.github.com/b08x" do
 #   gem "ferret"
 #   gem "nmatrix"
 #   gem 'nmatrix-lapacke'
 #   gem 'rbplotly'
 # end
-
 
 # gem "betty", git: "https://github.com/b08x/betty.git", branch: "main"
 # gem 'aoororachain'
@@ -191,3 +190,4 @@ gem 'pdf-textstream'
 # gem 'red-plasma'
 # gem 'red_amber', '0.4.2'
 # gem 'summarize'
+
