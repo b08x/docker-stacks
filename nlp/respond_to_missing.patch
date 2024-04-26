@@ -1,0 +1,49 @@
+diff --git a/lib/ruby-spacy.rb b/lib/ruby-spacy.rb
+index c0a1c3b..beed1e7 100644
+--- a/lib/ruby-spacy.rb
++++ b/lib/ruby-spacy.rb
+@@ -340,7 +340,7 @@ module Spacy
+       @py_doc.send(name, *args)
+     end
+ 
+-    def respond_to_missing?(sym)
++    def respond_to_missing?(name, sym)
+       sym ? true : super
+     end
+   end
+@@ -454,7 +454,7 @@ module Spacy
+       @py_nlp.send(name, *args)
+     end
+ 
+-    def respond_to_missing?(sym)
++    def respond_to_missing?(name, sym)
+       sym ? true : super
+     end
+   end
+@@ -660,7 +660,7 @@ module Spacy
+       @py_span.send(name, *args)
+     end
+ 
+-    def respond_to_missing?(sym)
++    def respond_to_missing?(name, sym)
+       sym ? true : super
+     end
+   end
+@@ -826,7 +826,7 @@ module Spacy
+       @py_token.send(name, *args)
+     end
+ 
+-    def respond_to_missing?(sym)
++    def respond_to_missing?(name, sym)
+       sym ? true : super
+     end
+   end
+@@ -901,7 +901,7 @@ module Spacy
+       @py_lexeme.send(name, *args)
+     end
+ 
+-    def respond_to_missing?(sym)
++    def respond_to_missing?(name, sym)
+       sym ? true : super
+     end
+   end
