@@ -38,7 +38,7 @@ RUN gem install ferret-0.11.9.0.gem && \
     bundle install
 
 RUN cd $HOME/.local/share/gem/ruby/3.1.0/gems/ruby-spacy-0.2.2 && \
-    patch -Np1 -i "/home/jovyan/respond_to_method.patch"
+    patch -Np1 -i "/home/jovyan/respond_to_missing.patch"
 
 # To fix: qt.qpa.xcb could not connect to display
 ENV QT_QPA_PLATFORM offscreen
