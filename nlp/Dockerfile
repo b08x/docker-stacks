@@ -24,8 +24,9 @@ ENV BUNDLE_PATH $HOME/.local/share/gem
 RUN mamba install --yes \
     'jupyter-ai' 'huggingface_hub' 'ipython' 'ipywidgets' \
     'nbconvert' 'pillow' 'pydantic' 'pyvis' 'spacy' \
-    'SQLAlchemy' 'txtai' 'langchain_anthropic' 'langchain_google_genai' && \
+    'SQLAlchemy' 'txtai' && \
     mamba clean --all -f -y && fix-permissions "${CONDA_DIR}" && fix-permissions "/home/${NB_USER}" && \
+    pip install 'langchain_anthropic' 'langchain_google_genai' && \
     python3 -m spacy download en_core_web_trf && \
     python3 -m spacy download en_core_web_lg && \
     python -c "import sys, importlib.util as util; 1 if util.find_spec('nltk') else sys.exit(); import nltk; nltk.download('punkt')"
